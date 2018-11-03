@@ -18,8 +18,8 @@ create table animal(
     zoo_address char(50),
     primary key (animal_id),
     foreign key (employee_id) references employee ON UPDATE CASCADE,
-    foregin key (zoo_address) references zoo ON UPDATE CASCADE,
-    foregin key (height, weight, species, sex) references animalfood ON UPDATE CASCADE);
+    foreign key (zoo_address) references zoo ON UPDATE CASCADE,
+    foreign key (height, weight, species, sex) references animalfood ON UPDATE CASCADE);
 
 create table animalfood(
     height int,
@@ -50,7 +50,7 @@ create table keeper(
     duty char(20),
     employee_id int,
     primary key (employee_id),
-    foregin key (employee_id) references employee ON DELETE CASCADE);
+    foreign key (employee_id) references employee ON DELETE CASCADE);
 
 create table trainer(
     start_time int,
