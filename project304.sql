@@ -21,6 +21,7 @@ create table animal(
     foreign key (zoo_address) references zoo ON UPDATE CASCADE,
     foreign key (height, weight, species, sex) references animalfood ON UPDATE CASCADE);
 
+
 create table animalfood(
     height int,
     weight int,
