@@ -6,6 +6,7 @@ create table zoo(
     country char(20),
     primary key (address));
 
+
 create table animal(
     animal_id int,
     name char(20),
