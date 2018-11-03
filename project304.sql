@@ -6,7 +6,6 @@ create table zoo(
     country char(20),
     primary key (address));
 
-
 create table animal(
     animal_id int,
     name char(20),
@@ -18,9 +17,9 @@ create table animal(
     employee_id int,
     zoo_address char(50),
     primary key (animal_id),
-    foreign key (employee_id) references employee ON UPDATE CASCADE,
-    foreign key (zoo_address) references zoo ON UPDATE CASCADE,
-    foreign key (height, weight, species, sex) references animalfood ON UPDATE CASCADE);
+    foreign key (employee_id) references employee ON UPDATE CASCADE ON DELETE NULL,
+    foreign key (zoo_address) references zoo ON UPDATE CASCADE ON DELETE CASCADE,
+    foreign key (height, weight, species, sex) references animalfood ON UPDATE CASCADE ON DELETE SET NULL);
 
 create table animalfood(
     height int,
@@ -38,7 +37,7 @@ create table employee(
     pay int,
     zoo_address char(50),
     primary key (employee_id),
-    foreign key (zoo_address) references zoo ON DELETE CASCADE,
+    foreign key (zoo_address) references zoo ON DELETE CASCADE ON UPDATE CASCADE,
     foreign key (f_name, l_name) references employeecommunication ON UPDATE CASCADE);
 
 create table employeecommunication(
@@ -51,7 +50,7 @@ create table keeper(
     duty char(20),
     employee_id int,
     primary key (employee_id),
-    foreign key (employee_id) references employee ON DELETE CASCADE);
+    foreign key (employee_id) references employee ON DELETE CASCADE ON UPDATE CASCADE);
 
 create table trainer(
     start_time int,
@@ -59,8 +58,8 @@ create table trainer(
     speciality char(20),
     employee_id int,
     primary key (employee_id),
-    foreign key (employee_id) references employee ON DELETE CASCADE,
-    foreign key (start_time, name) referecnes show ON UPDATE CASCADE);
+    foreign key (employee_id) references employee ON DELETE CASCADE ON UPDATE CASCADE,
+    foreign key (start_time, name) references show ON UPDATE CASCADE ON DELETE NULL);
 
 create table building(
     building_id int,
@@ -79,7 +78,7 @@ create table supplement (
     food_id int,
     type char(20),
     primary key (food_id),
-    foreign key (food_id) references food ON DELETE CASCADE);
+    foreign key (food_id) references food ON DELETE CASCADE ON UPDATE CASCADE);
 
 create table habitat(
     enclosure_id int,
