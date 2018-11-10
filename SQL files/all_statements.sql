@@ -186,6 +186,8 @@ values('15500 San Pasqual Valley Rd', 'San Diego Zoo Safari Park', 12345, 'Escon
 insert into zoo
 values('2000 Meadowvale Rd', 'Toronto Zoo', 23456, 'Toronto', 'Canada');
 insert into zoo
+values('845 Avison Way', 'Vancouver Zoo', 523432, 'Vancouver', 'Canada');
+insert into zoo
 values('closet', 'Narnia Zoo', 34567, 'Narnia', 'Atlantis');
 insert into zoo
 values('80 Mandai Lake Rd', 'Singapore Zoo', 45678, 'Singapore', 'Singapore');
@@ -210,6 +212,10 @@ values(103, 'Area 2 South', 'habitat', '2000 Meadowvale Rd');
 insert into site
 values(104, 'Area 4', 'show', '2000 Meadowvale Rd');
 insert into site
+values(105, 'Area 5', null, '2000 Meadowvale Rd');
+insert into site
+values(106, 'Area 6', null, '2000 Meadowvale Rd');
+insert into site
 values(201, 'Area 1 West', 'food', '80 Mandai Lake Rd');
 insert into site
 values(202, 'Area 1 East', 'habitat', '80 Mandai Lake Rd');
@@ -217,6 +223,10 @@ insert into site
 values(203, 'Area 3', 'habitat', '80 Mandai Lake Rd');
 insert into site
 values(204, 'Area 4', 'show', '80 Mandai Lake Rd');
+insert into site
+values(205, 'Area 5', null, '80 Mandai Lake Rd');
+insert into site
+values(206, 'Area 6', null, '80 Mandai Lake Rd');
 
 
 insert into habitatbiome
@@ -343,11 +353,11 @@ insert into employeecommunication
 values ('jake','suuli',13);
 
 insert into employee
-values ('newton', 'scamander', 1234567890, 100, '2000 Meadowvale Rd');
+values ('newton', 'scamander', 1234567890, 0, '2000 Meadowvale Rd');
 insert into employee
 values ('willy', 'wonka', 2345678901, 100, '2000 Meadowvale Rd');
 insert into employee
-values ('jane','goodall', 3456789012, 100, '2000 Meadowvale Rd');
+values ('jane','goodall', 3456789012, 0, '2000 Meadowvale Rd');
 insert into employee
 values ('mary','poppins', 2235823623, 100, '2000 Meadowvale Rd');
 insert into employee
@@ -361,11 +371,11 @@ values ('kermit','thefrog', 1279765434, 75, '80 Mandai Lake Rd');
 insert into employee
 values ('tom','hanks', 1246545423, 75, '80 Mandai Lake Rd');
 insert into employee
-values ('argus','filch', 1367865421, 50, '80 Mandai Lake Rd');
+values ('argus','filch', 1367865421, 0, '80 Mandai Lake Rd');
 insert into employee
 values ('andrew','john', 1236789876, 50, '80 Mandai Lake Rd');
 insert into employee
-values ('sweeper','bot', 1341567688, 50, '80 Mandai Lake Rd');
+values ('sweeper','bot', 1341567688, 0, '80 Mandai Lake Rd');
 insert into employee
 values ('jake','suuli', 1345976543, 50, '80 Mandai Lake Rd');
 
@@ -556,5 +566,3 @@ insert into eats
 values (206, 22);
 insert into eats
 values (207, 21);
-
-

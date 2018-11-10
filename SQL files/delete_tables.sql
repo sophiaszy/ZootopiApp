@@ -1,0 +1,17 @@
+drop table performs;
+drop table caresfor;
+drop table trains;
+drop table trades;
+drop table eats;
+drop table show;
+drop table food;
+drop table keeper;
+drop table trainer;
+drop table employee;
+drop table employeecommunication;
+drop table animal;
+drop table animalfood;
+drop table habitat;
+drop table habitatbiome;
+drop table site;
+drop table zoo;
