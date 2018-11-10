@@ -93,6 +93,7 @@ create table trainer(
 
 create table food(
     food_id int,
+    name char(20),
     stock_serving int,
     date_purchased date,
     date_expired date,
@@ -103,7 +104,7 @@ create table food(
 
 
 create table show(
-    start_time int,
+    start_time char(8),
     duration int,
     name char(20),
     type char(20),
@@ -113,51 +114,49 @@ create table show(
     );
 
 create table performs(
-	start_time int,
+    start_time char(8),
     show_name char(20),
-	employee_id int,
-	animal_id int,
-	role char(50),
-	primary key (start_time, employee_id, animal_id),
-	foreign key (start_time, show_name) references show,
-	foreign key (employee_id) references employee,
-	foreign key (animal_id) references animal
+    employee_id int,
+    animal_id int,
+    role char(50),
+    primary key (start_time, employee_id, animal_id),
+    foreign key (start_time, show_name) references show,
+    foreign key (employee_id) references employee,
+    foreign key (animal_id) references animal
     );
 
 create table caresfor(
-	employee_id int,
-	animal_id int,
-	primary key (employee_id, animal_id),
-	foreign key (employee_id) references employee,
-	foreign key (animal_id) references animal
+    employee_id int,
+    animal_id int,
+    primary key (employee_id, animal_id),
+    foreign key (employee_id) references employee,
+    foreign key (animal_id) references animal
     );
 
 create table trains(
-	employee_id int,
-	animal_id int,
-	skills char(50),
-	primary key (employee_id, animal_id),
-	foreign key (employee_id) references employee,
-	foreign key (animal_id) references animal
+    employee_id int,
+    animal_id int,
+    skills char(50),
+    primary key (employee_id, animal_id),
+    foreign key (employee_id) references employee,
+    foreign key (animal_id) references animal
     );
 
 create table trades(
-	zoo_from_address varchar(40),
-	zoo_to_address varchar(40),
-	animal_id int,
-	trade_date date,
-	primary key (zoo_from_address, zoo_to_address, animal_id),
-	foreign key (zoo_from_address) references zoo,
-	foreign key (zoo_to_address) references zoo,
-	foreign key (animal_id) references animal
+    zoo_from_address varchar(40),
+    zoo_to_address varchar(40),
+    animal_id int,
+    trade_date date,
+    primary key (zoo_from_address, zoo_to_address, animal_id),
+    foreign key (zoo_from_address) references zoo,
+    foreign key (zoo_to_address) references zoo,
+    foreign key (animal_id) references animal
     );
 
 create table eats(
-	animal_id int,
-	food_id int,
-	primary key (animal_id, food_id),
-	foreign key (animal_id) references animal ON DELETE CASCADE,
-	foreign key (food_id) references food
+    animal_id int,
+    food_id int,
+    primary key (animal_id, food_id),
+    foreign key (animal_id) references animal ON DELETE CASCADE,
+    foreign key (food_id) references food
     );
-
-
