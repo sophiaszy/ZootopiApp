@@ -42,7 +42,6 @@ public class Driver {
             con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug", username, password);
             System.out.println("\nConnected to Oracle");
             stmt = con.createStatement();
-            // not sure if the url is correct
         } catch (SQLException e) {
             System.out.println("Message: " + e.getMessage());
             System.out.println("\nFailed to connect to Oracle");
@@ -53,14 +52,23 @@ public class Driver {
     * execute any SQL statements that return nothing
      */
     public void executeUpdate(String sqlstmt) {
-        try {
-            stmt.executeUpdate(sqlstmt);
-            con.commit();
-        } catch (SQLException e) {
-            System.out.println("Message: " + e.getMessage());
-            System.out.println(("\nUnable to execute: " + sqlstmt));
-        }
+        // to do
     }
+    
+    /*
+    *
+    */
+    public void executeInsert(String sqlstmt) {
+        // to do
+    }
+    
+    /*
+    *
+    */
+    public void executeDelete(String sqlstmt) {
+        // to do
+    }
+    
 
     /*
     * execute query statements
