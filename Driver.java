@@ -35,17 +35,17 @@ public class Driver {
     /*
     * connects to Oracle database named using username and password
      */
-    private boolean connect(String username, String password) {
+    private void connect() {
+        String username = ora_f6c1b
+        String password = a26525155
         try {
             con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug", username, password);
             System.out.println("\nConnected to Oracle");
             stmt = con.createStatement();
-            return true;
             // not sure if the url is correct
         } catch (SQLException e) {
             System.out.println("Message: " + e.getMessage());
             System.out.println("\nFailed to connect to Oracle");
-            return false;
         }
     }
 
@@ -75,19 +75,15 @@ public class Driver {
         }
     }
 
-
-
     /*
     * disconnect from Oracle database
      */
-    public boolean disconnect() {
+    public void disconnect() {
         try {
             con.close();
-            return true;
         } catch (SQLException e) {
             System.out.println("Message: " + e.getMessage());
             System.out.println("\nFailed to disconnect from Oracle");
-            return false;
         }
     }
 
