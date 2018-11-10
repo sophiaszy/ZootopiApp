@@ -1,25 +1,6 @@
-drop table performs;
-drop table caresfor;
-drop table trains;
-drop table trades;
-drop table eats;
-drop table show;
-drop table food;
-drop table keeper;
-drop table trainer;
-drop table employee;
-drop table employeecommunication;
-drop table animal;
-drop table animalfood;
-drop table habitat;
-drop table habitatbiome;
-drop table site;
-drop table zoo;
-
-
 create table zoo(
     address varchar(40),
-    name char(20) not null,
+    name char(40) not null,
     phone int,
     city char(20),
     country char(20),
@@ -72,7 +53,6 @@ create table animal(
     weight int,
     species char(20),
     enclosure_id int,
-    id_enclosure int,
     primary key (animal_id),
     foreign key (enclosure_id) references habitat ON DELETE SET NULL,
     foreign key (height, weight, species, sex) references animalfood
@@ -114,8 +94,8 @@ create table trainer(
 create table food(
     food_id int,
     stock_serving int,
-    date_purchased int,
-    date_expired int,
+    date_purchased date,
+    date_expired date,
     site_id int not null,
     primary key (food_id),
     foreign key (site_id) references site ON DELETE CASCADE
