@@ -1,14 +1,9 @@
 package GUI;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.*;
 
 /*
   This page will be the first thing the user sees.  This page will contain a "user id" field that will determine the
@@ -18,39 +13,65 @@ import java.io.IOException;
 public class LoginPage extends JPanel {
 
     //components
-    private JButton login_button = new JButton("Login");
-    private JLabel   login_label = new JLabel("Please enter employee ID");
-    private JLabel   piclabel;
-    private JTextField login_field = new JTextField("#####");
-    private JToolTip label_tt = new JToolTip();
+    private    JButton login_button = new JButton    ("Login");
+    private    JButton focus_grab = new JButton    ();
+    private     JLabel login_label  = new JLabel     ("Please enter eployee ID:");
+    private JTextField login_field  = new JTextField ("1234567",10);
 
-    public LoginPage(){
-
-        //try{
-            //BufferedImage myPicture = ImageIO.read(new File(gui/VA_logo.png);
-            //piclabel = new JLabel(new ImageIcon(myPicture));
-            //piclabel.setSize(new Dimension(100,100));
-
-        //this.add(piclabel);
+    int buttonClicked = 0;
+    private JLabel b_click  = new JLabel("Button clicked:" + buttonClicked);
 
 
-        Border login_border = BorderFactory.createTitledBorder("login");
-        this.add(login_label);
-        this.add(login_field);
+    public LoginPage() {
+
         this.add(login_button);
+        ListenForButton lfb = new ListenForButton();
+        login_button.addActionListener(lfb);
+        add(b_click);
+        login_button.requestFocus();
+
+        this.setBackground(Color.GRAY);
+        Border login_border = BorderFactory.createTitledBorder("login");
         this.setBorder(login_border);
-        this.setVisible(true);
-        login_field.requestFocusInWindow(); // Auto select highlight, currently not working
-    /*
-        }
-    catch(IOException e) {
-            System.out.println("Message: " + e.getMessage());
+        this.add(login_label);
+        login_label.setToolTipText("<HtMl><p>If you have forgotten,&nbsp;<strong>contact your supervisor</strong>.</p></HtMl>");
+
+        this.add(login_field);
+        Focus f = new Focus();
+        login_field.addFocusListener(f);
+
+    }
+
+    private class ListenForButton implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == login_button){
+                buttonClicked ++;
+                b_click.setText("Button clicked:" + buttonClicked);
             }
-     */
+        }
+
+    }
+
+    private class Focus implements FocusListener{
+
+        @Override
+        public void focusGained(FocusEvent e) {
+            login_field = (JTextField)e.getComponent();
+            login_field.setText("");
+            login_field.removeFocusListener(this);
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+
         }
     }
 
-    //TODO: action listener
+}
+
+
     //TODO: mouse input button
     //TODO: mouse tooltip "enter"
 

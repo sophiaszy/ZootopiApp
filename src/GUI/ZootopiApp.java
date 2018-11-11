@@ -18,10 +18,11 @@ public class ZootopiApp {
     public ZootopiApp(){
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(new Dimension(800,500));
+        window.setBackground(Color.BLUE);
         window.setLocationRelativeTo(null);
         window.setResizable(true);
-        window.setVisible(true);
         window.add(login);
+        window.setVisible(true);
     }
 
     public static void main(String[] args ){
