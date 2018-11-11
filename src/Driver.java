@@ -1,4 +1,3 @@
-
 import java.sql.*;
 
 /**
@@ -13,6 +12,8 @@ public class Driver {
     /*
     * Constructor
      */
+
+
     private Driver() {
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -22,8 +23,8 @@ public class Driver {
         }
     }
 
-    /*
-    * singleton
+
+    /* singleton
      */
     public static Driver getInstance() {
         if (driverInstance == null) {
@@ -36,8 +37,8 @@ public class Driver {
     * connects to Oracle database named using username and password
      */
     private void connect() {
-        String username = ora_f6c1b;
-        String password = a26525155;
+        String username = "ora_f6c1b";
+        String password = "a26525155";
         try {
             con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug", username, password);
             System.out.println("\nConnected to Oracle");

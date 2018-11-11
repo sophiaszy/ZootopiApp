@@ -17,9 +17,9 @@ public class ZootopiApp {
 
     public ZootopiApp(){
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setPreferredSize(new Dimension(1500,1000));
+        window.setSize(new Dimension(800,500));
         window.setLocationRelativeTo(null);
-        window.setResizable(false);
+        window.setResizable(true);
         window.setVisible(true);
         window.add(login);
     }
@@ -28,8 +28,12 @@ public class ZootopiApp {
 
         //TODO: BRANDON -connect to database, and proceed to main page
 
-        ZootopiApp application = new ZootopiApp();
-
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                ZootopiApp application = new ZootopiApp();
+            }
+        });
     }
 }
 
