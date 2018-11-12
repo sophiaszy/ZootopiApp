@@ -1,10 +1,31 @@
+
+import java.sql*
+
 public class ZooManager {
-    // to do
-    String address;
-
-
+    Driver jbdc;
+    String zooAddress;
+    String zooName;
+    int phoneNumber;
+    String city;
+    String country;
 
     public ZooManager() {
-        // to do
+        jdbc = new Driver();
+        jbdc.connect();
     }
+
+    public void update() {
+
+    }
+
+    public void insert() {
+
+    }
+
+
+    public void delete() {
+
+    }
+
+
 }

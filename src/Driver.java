@@ -1,11 +1,9 @@
-
 import java.sql.*;
 
 /**
  * Created by OwenTsai on 2018-11-09.
  */
 public class Driver {
-    private static Driver driverInstance;
     private Connection con;
     private Statement stmt;
 
@@ -23,16 +21,6 @@ public class Driver {
     }
 
     /*
-    * singleton
-     */
-    public static Driver getInstance() {
-        if (driverInstance == null) {
-            driverInstance = new Driver();
-        }
-        return driverInstance;
-    }
-
-    /*
     * connects to Oracle database named using username and password
      */
     private void connect() {
@@ -43,32 +31,22 @@ public class Driver {
             System.out.println("\nConnected to Oracle");
             stmt = con.createStatement();
         } catch (SQLException e) {
-            System.out.println("Message: " + e.getMessage());
-            System.out.println("\nFailed to connect to Oracle");
+            System.out.println("Message: " + e.getMessage() + "\nFailed to connect to Oracle");
         }
     }
 
     /*
-    * execute any SQL statements that return nothing
+    * execute any SQL statements alter the database (update, delete, insert)
      */
-    public void executeUpdate(String sqlstmt) {
-        // to do
+    public void executeAlter(String sqlstmt) {
+        try {
+            stmt.executeUpdate(sqlstmt);
+            con.commit();
+        } catch (SQLException e) {
+            System.out.println("Message: " + e.getMessage() + "\nUnable to execute: " + sqlstmt);
+        }
     }
-    
-    /*
-    *
-    */
-    public void executeInsert(String sqlstmt) {
-        // to do
-    }
-    
-    /*
-    *
-    */
-    public void executeDelete(String sqlstmt) {
-        // to do
-    }
-    
+
 
     /*
     * execute query statements
@@ -77,8 +55,7 @@ public class Driver {
         try {
             return stmt.executeQuery(sqlstmt);
         } catch (SQLException e) {
-            System.out.println("Message: " + e.getMessage());
-            System.out.println("\nUnable to execute: " + sqlstmt);
+            System.out.println("Message: " + e.getMessage() + "\nUnable to execute: " + sqlstmt);
             return null;
         }
     }
