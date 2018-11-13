@@ -83,64 +83,34 @@ insert into habitat
 values(2006, 'tropical rainforest', 100, 10, 203);
 
 
-insert into animalfood
-values(50,10, 'duck', 'M', 20, 2);
-insert into animalfood
-values(40,8, 'duck', 'F', 20, 1);
-insert into animalfood
-values(400,300, 'giraffe', 'M', 10, 3);
-insert into animalfood
-values(300,250, 'giraffe', 'F', 10, 4);
-insert into animalfood
-values(120,300, 'tiger', 'M', 15, 5);
-insert into animalfood
-values(100,300, 'tiger', 'F', 15, 8);
-insert into animalfood
-values(150,400, 'lion', 'M', 15, 6);
-insert into animalfood
-values(140,350, 'lion', 'F', 15, 5);
-insert into animalfood
-values(80,100, 'monkey', 'M', 20, 4);
-insert into animalfood
-values(60,90, 'monkey', 'F', 20, 3);
-insert into animalfood
-values(200,200, 'panda', 'M', 10, 5);
-insert into animalfood
-values(180,180, 'panda', 'F', 10, 4);
-insert into animalfood
-values(80,30, 'fox', 'M', 14, 4);
-insert into animalfood
-values(70,25, 'fox', 'F', 14, 4);
-
-
 insert into animal
-values(101, 'Johnny', 5, 'M', 50, 10, 'duck', 1001);
+values(101, 'Johnny', 5, 'M', 50, 10, 'duck',  20, 2, 1001);
 insert into animal
-values(201, 'Ruby', 4, 'F', 40, 8, 'duck', 2001);
+values(201, 'Ruby', 4, 'F', 40, 8, 'duck', 20, 1, 2001);
 insert into animal
-values(102, 'Chandler', 8, 'M', 400, 300, 'giraffe', 1002);
+values(102, 'Chandler', 8, 'M', 400, 300, 'giraffe', 10, 3, 1002);
 insert into animal
-values(202, 'Monica', 8, 'F', 300, 250, 'giraffe', 2002);
+values(202, 'Monica', 8, 'F', 300, 250, 'giraffe', 10, 4, 2002);
 insert into animal
-values(103, 'Jeremy', 7, 'M', 120, 300, 'tiger', 1003);
+values(103, 'Jeremy', 7, 'M', 120, 300, 'tiger', 15, 5, 1003);
 insert into animal
-values(203, 'Gina', 6, 'F', 100, 300, 'tiger', 2003);
+values(203, 'Gina', 6, 'F', 100, 300, 'tiger', 15, 8, 2003);
 insert into animal
-values(104, 'Kevin', 10, 'M', 150, 400, 'lion', 1004);
+values(104, 'Kevin', 10, 'M', 150, 400, 'lion', 15, 6, 1004);
 insert into animal
-values(204, 'Clara', 12, 'F', 140, 350, 'lion', 2004);
+values(204, 'Clara', 12, 'F', 140, 350, 'lion', 15, 5, 2004);
 insert into animal
-values(105, 'Edward', 9, 'M', 80, 100, 'monkey', 1005);
+values(105, 'Edward', 9, 'M', 80, 100, 'monkey', 20, 4, 1005);
 insert into animal
-values(205, 'Brittanie', 10, 'F', 60, 90, 'monkey', 2005);
+values(205, 'Brittanie', 10, 'F', 60, 90, 'monkey', 20, 3, 2005);
 insert into animal
-values(106, 'Albert', 8, 'M', 200, 200, 'panda', 1006);
+values(106, 'Albert', 8, 'M', 200, 200, 'panda', 10, 5, 1006);
 insert into animal
-values(206, 'Jessica', 8, 'F', 180, 180, 'panda', 2006);
+values(206, 'Jessica', 8, 'F', 180, 180, 'panda', 10, 4, 2006);
 insert into animal
-values(107, 'Mason', 3, 'M', 80, 30, 'fox', 1002);
+values(107, 'Mason', 3, 'M', 80, 30, 'fox', 14, 4, 1002);
 insert into animal
-values(207, 'Mary', 2, 'F', 70, 25, 'fox', 2002);
+values(207, 'Mary', 2, 'F', 70, 25, 'fox', 14, 4, 2002);
 
 insert into employeecommunication
 values ('newton','scamander',1);

@@ -34,16 +34,6 @@ create table habitat(
     foreign key (site_id) references site ON DELETE CASCADE
     );
 
-create table animalfood(
-    height int,
-    weight int,
-    species char(20),
-    sex char(20),
-    eat_freq_week int,
-    eat_amount int,
-    primary key (height, weight, species, sex)
-    );
-
 create table animal(
     animal_id int,
     name char(20),
@@ -52,10 +42,11 @@ create table animal(
     height int,
     weight int,
     species char(20),
+    eat_freq_week int,
+    eat_amount int,
     enclosure_id int,
     primary key (animal_id),
-    foreign key (enclosure_id) references habitat ON DELETE SET NULL,
-    foreign key (height, weight, species, sex) references animalfood
+    foreign key (enclosure_id) references habitat ON DELETE SET NULL
     );
 
 create table employeecommunication(
