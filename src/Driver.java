@@ -4,28 +4,36 @@ import java.sql.*;
  * Created by OwenTsai on 2018-11-09.
  */
 public class Driver {
+    private static Driver driver;
     private Connection con;
     private Statement stmt;
 
 
     /*
-    * Constructor
+     * Constructor
      */
     private Driver() {
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
         } catch (SQLException e) {
             System.out.println("Message: " + e.getMessage());
-            System.exit(-1);
         }
+        // connect to Oracle
+        connect();
+    }
+
+    public static Driver getInstance() {
+        if (driver == null)
+            driver = new Driver();
+        return driver;
     }
 
     /*
-    * connects to Oracle database named using username and password
+     * connects to Oracle database named using username and password
      */
     private void connect() {
-        String username = ora_f6c1b;
-        String password = a26525155;
+        String username = "ora_f6c1b";
+        String password = "a26525155";
         try {
             con = DriverManager.getConnection("jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug", username, password);
             System.out.println("\nConnected to Oracle");
@@ -36,20 +44,21 @@ public class Driver {
     }
 
     /*
-    * execute any SQL statements alter the database (update, delete, insert)
+     * execute any SQL statements alter the database (update, delete, insert)
      */
-    public void executeAlter(String sqlstmt) {
+    public String executeAlter(String sqlstmt) {
         try {
             stmt.executeUpdate(sqlstmt);
             con.commit();
+            return "1";
         } catch (SQLException e) {
-            System.out.println("Message: " + e.getMessage() + "\nUnable to execute: " + sqlstmt);
+            return e.getMessage();
         }
     }
 
 
     /*
-    * execute query statements
+     * execute query statements
      */
     public ResultSet executeQuery(String sqlstmt) {
         try {
@@ -61,7 +70,7 @@ public class Driver {
     }
 
     /*
-    * disconnect from Oracle database
+     * disconnect from Oracle database
      */
     public void disconnect() {
         try {
