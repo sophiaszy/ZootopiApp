@@ -1,12 +1,9 @@
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 public class ZooManager {
     private Driver jdbc;
-    private String zooAddress;
-    private String zooName;
-    private int phoneNumber;
-    private String city;
-    private String country;
 
     public ZooManager() {
         jdbc = Driver.getInstance();
@@ -17,13 +14,13 @@ public class ZooManager {
     // return:
     //      "Employee successfully added" if inputs are valid"
     //      "Not Valid" otherwise
-    public String addEmployee(String f_name, String l_name, int walkeetalkee, int employee_id, int pay){
+    public String addEmployee(String f_name, String l_name, int walkeetalkee, int employee_id, int pay, String zooAddress){
         StringBuilder strb1 = new StringBuilder();
         strb1.append("insert into employeecommunication values ('");
         strb1.append(f_name);
         strb1.append("', '");
         strb1.append(l_name);
-        strb1.append("', '");
+        strb1.append("', ");
         strb1.append(Integer.toString(walkeetalkee));
         strb1.append(")");
         String firstQuery = strb1.toString();
@@ -34,14 +31,13 @@ public class ZooManager {
             strb2.append(f_name);
             strb2.append("', '");
             strb2.append(l_name);
-            strb2.append("', '");
+            strb2.append("', ");
             strb2.append(employee_id);
-            strb2.append("', '");
+            strb2.append(", ");
             strb2.append(pay);
-            strb2.append("', '");
-            strb2.append(this.zooAddress);
-            strb2.append(")");
-            strb2.append("'");
+            strb2.append(", '");
+            strb2.append(zooAddress);
+            strb2.append("')");
             String secondQuery = strb2.toString();
             String result2 = jdbc.executeAlter(secondQuery);
             if (result2 == "1") {
@@ -49,8 +45,9 @@ public class ZooManager {
             } else {
                 return "Not Valid";
             }
-        } else
+        } else {
             return "Not Valid";
+        }
     }
 
     // remove Employee from database
@@ -58,6 +55,44 @@ public class ZooManager {
     //      "Employee successfully removed" if the delete is valid
     //      "Not Valid" otherwise
     public String removeEmployee(int employee_id, String f_name, String l_name) {
+        // need to see if Employee is trainer or keeper
+        StringBuilder sb = new StringBuilder();
+        boolean isTrainer = false;
+        boolean isKeeper = false;
+        sb.append("select * from trainer where employee_id = ");
+        sb.append(employee_id);
+        try {
+            isTrainer = jdbc.executeQuery(sb.toString()).next();
+        }catch(SQLException e) {System.out.println("select trainer query failed");}
+        sb = new StringBuilder();
+        sb.append("select * from keeper where employee_id = ");
+        sb.append(employee_id);
+        try {
+            isKeeper = jdbc.executeQuery(sb.toString()).next();
+        }catch(SQLException e) {System.out.println("select keeper query failed");}
+        if (!isTrainer && !isKeeper)
+            return "Not Valid";
+
+    // Delete from Trainer/Keeper + Employee
+        if (isKeeper) {
+            sb = new StringBuilder();
+            sb.append("delete from caresfor where employee_id = "); sb.append(employee_id);
+            jdbc.executeAlter(sb.toString());
+            sb = new StringBuilder();
+            sb.append("delete from keeper where employee_id = "); sb.append(employee_id);
+            jdbc.executeAlter(sb.toString());
+        }
+        if (isTrainer) {
+            sb = new StringBuilder();
+            sb.append("delete from trains where employee_id = "); sb.append(employee_id);
+            jdbc.executeAlter(sb.toString());
+            sb = new StringBuilder();
+            sb.append("delete from performs where employee_id = "); sb.append(employee_id);
+            jdbc.executeAlter(sb.toString());
+            sb = new StringBuilder();
+            sb.append("delete from trainer where employee_id = "); sb.append(employee_id);
+            jdbc.executeAlter(sb.toString());
+        }
         StringBuilder strb1 = new StringBuilder();
         strb1.append("delete from employee where employee_id = ");
         strb1.append(employee_id);
@@ -73,16 +108,18 @@ public class ZooManager {
             String secondQuery = strb2.toString();
             String result2 = jdbc.executeAlter(secondQuery);
             if (result2 == "1") {
-                return "Employee successully removed";
+                return "Employee successfully removed";
             } else {
+                System.out.println(result2);
                 return "Not Valid";
             }
         } else {
+            System.out.println(result1);
             return "Not Valid";
         }
     }
 
-    // Update Employee info
+    // Update Employee info == update pay
     // return:
     //      "Employee successfully updated" if update is valid
     //      "Not Valid" otherwise
@@ -143,7 +180,8 @@ public class ZooManager {
         strb.append(sq_ft);
         strb.append("and depth = ");
         strb.append(depth);
-        strb.append("and biome = " + biome);
+        strb.append("and biome = '" + biome);
+        strb.append("'");
         String query = strb.toString();
         return jdbc.executeQuery(query);
     }
@@ -192,7 +230,8 @@ public class ZooManager {
         str.append(species); str.append("',");
         str.append(eat_freq); str.append(",");
         str.append(eat_amt); str.append(",");
-        str.append(habitat_id); str.append(";");
+        str.append(habitat_id);
+        str.append(")");
         String query = str.toString();
         String result = jdbc.executeAlter(query);
         if (result.indexOf("unique constraint")!= -1)
@@ -205,10 +244,24 @@ public class ZooManager {
 
     // delete animal
     // return "Success" or "Not Valid"
+    // need to delete all relationships that animals are involved in before deleting animal
+    // performs, caresfor, trains, eats, trades
     public String deleteAnimal(int id) {
+        StringBuilder sb;
+        sb = new StringBuilder(); sb.append("delete from performs where animal_id = "); sb.append(id);
+        System.out.print(jdbc.executeQuery(sb.toString()));
+        sb = new StringBuilder(); sb.append("delete from caresfor where animal_id = "); sb.append(id);
+        System.out.print(jdbc.executeQuery(sb.toString()));
+        sb = new StringBuilder(); sb.append("delete from trains where animal_id = "); sb.append(id);
+        System.out.print(jdbc.executeQuery(sb.toString()));
+        sb = new StringBuilder(); sb.append("delete from eats where animal_id = "); sb.append(id);
+        System.out.print(jdbc.executeQuery(sb.toString()));
+        sb = new StringBuilder(); sb.append("delete from trades where animal_id = "); sb.append(id);
+        System.out.print(jdbc.executeQuery(sb.toString()));
+
         StringBuilder str = new StringBuilder();
         str.append("delete from animal where animal_id =");
-        str.append(id); str.append(";");
+        str.append(id);
         String query = str.toString();
         String result = jdbc.executeAlter(query);
         if (result == "1")
@@ -217,7 +270,7 @@ public class ZooManager {
             return "Not Valid";
     }
 
-    // update animalt
+    // update animal
     // return "Success" or "Not Valid"
     public String updateAnimal(int id, String name, int age, String sex, int height, int weight, String species,
                                int eat_freq, int eat_amt, int habitat_id) {
@@ -225,19 +278,20 @@ public class ZooManager {
         str.append("update animal set name = '");
         str.append(name); str.append("', age =");
         str.append(age); str.append(", sex ='");
-        str.append(sex); str.append("', height");
+        str.append(sex); str.append("', height =");
         str.append(height); str.append(", weight =");
         str.append(weight); str.append(", species ='");
         str.append(species); str.append("', eat_freq_week =");
-        str.append(eat_freq); str.append(", eat_amount");
-        str.append(eat_amt); str.append(", enclosure_id");
+        str.append(eat_freq); str.append(", eat_amount =");
+        str.append(eat_amt); str.append(", enclosure_id =");
         str.append(habitat_id); str.append("where animal_id = ");
-        str.append(id); str.append(";");
+        str.append(id);
         String query = str.toString();
         String result = jdbc.executeAlter(query);
         if (result == "1")
             return "Success";
         else
+            System.out.println(result);
             return "Not Valid";
     }
 
@@ -246,16 +300,16 @@ public class ZooManager {
     // returns from animal: id, name, age, sex, species
     public ResultSet groupAnimalBySpecies() {
         StringBuilder str = new StringBuilder();
-        str.append("select animal_id, name, age, sex, species from animal order by species;");
+        str.append("select animal_id, name, age, sex, species from animal order by species");
         return jdbc.executeQuery(str.toString());
     }
 
     // Get animal detail by species (weight + height)
-    // returns from animal: id, weight, height
+    // returns from animal: id, name, weight, height
     public ResultSet getSpeciesDetail(String species) {
         StringBuilder str = new StringBuilder();
-        str.append("select animal_id, weight, height from animal where species = '");
-        str.append(species); str.append("';");
+        str.append("select animal_id, name, weight, height from animal where species = '");
+        str.append(species); str.append("'");
         return jdbc.executeQuery(str.toString());
     }
 
@@ -269,7 +323,7 @@ public class ZooManager {
     public ResultSet getFoodDetails() {
         StringBuilder str = new StringBuilder();
         str.append("select s.site_id, s.location, f.food_id, f.name, f.stock_serving, f.date_purchased, f.date_expired ");
-        str.append("from site s, food f where s.site_id = f.site_id;");
+        str.append("from site s, food f where s.site_id = f.site_id");
         return jdbc.executeQuery(str.toString());
     }
 
@@ -278,7 +332,7 @@ public class ZooManager {
     // returns from food: id, name, date_expiry
     public ResultSet getFoodSoonToExpires() {
         StringBuilder str = new StringBuilder();
-        str.append("select food_id, name, date_expiry from food where date_expired > '2018-12-01' order by date_expired");
+        str.append("select food_id, name, date_expired from food where date_expired < '2018-12-31' order by date_expired");
         return jdbc.executeQuery(str.toString());
     }
 
@@ -290,7 +344,7 @@ public class ZooManager {
     public ResultSet filterZooByCountry(String country) {
         StringBuilder str = new StringBuilder();
         str.append("select * from zoo where country = '");
-        str.append(country); str.append("';");
+        str.append(country); str.append("'");
         return jdbc.executeQuery(str.toString());
     }
 

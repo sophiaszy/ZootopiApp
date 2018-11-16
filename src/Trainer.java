@@ -1,13 +1,13 @@
 import java.sql.ResultSet;
 
-public class Trainer {
+public class Trainer extends Employee{
 
-    private Driver jdbc;
+    private Driver         jdbc = Driver.getInstance();
+
     private int employee_id;
 
     public Trainer(int employee_id) {
-        jdbc = Driver.getInstance();
-        this.employee_id = employee_id;
+        super(employee_id);
     }
 
     // get the Trainer's view (animals + shows)
