@@ -25,7 +25,7 @@ public class LoginPage extends JPanel {
 
 
     private JTextField employeeID_field  = new JTextField (10);
-    private JTextField managerPwd_field = new JTextField(manager_psw,10);
+    private JTextField managerPwd_field = new JTextField("abcde",10);
 
     private GridBagConstraints c = new GridBagConstraints();
 
@@ -41,23 +41,19 @@ public class LoginPage extends JPanel {
         Border login_border = BorderFactory.createTitledBorder("login");
         this.setBorder(login_border);
 
+        c.gridy = 0;
         c.gridx = 0;
-        c.gridy = 0;
         add(employeelogin_label,c);
-
         c.gridx = 1;
-        c.gridy = 0;
         add(employeeID_field,c);
 
+        c.gridy = 1;
         c.gridx = 0;
-        c.gridy = 1;
         add(managerlogin_label,c);
-
         c.gridx = 1;
-        c.gridy = 1;
         add(managerPwd_field,c);
 
-        c.gridy = 3;
+        c.gridy = 4;
         c.anchor = GridBagConstraints.NORTH;
         add(login_button,c);
         ListenForButton lfb = new ListenForButton();
@@ -69,7 +65,6 @@ public class LoginPage extends JPanel {
         error_label.setForeground(Color.red);
         error_label.setVisible(false);
         add(error_label);
-
 
 
         driver = Driver.getInstance();
@@ -97,13 +92,11 @@ public class LoginPage extends JPanel {
                 String inputPswValue = managerPwd_field.getText();
 
                 // check the type of employee
-                boolean isManager = false;
                 boolean isKeeper = false;
                 boolean isTrainer = false;
 
                 // only one field should be filled
                 // Employee login
-
                 if(!employeeID_field.getText().isEmpty() && managerPwd_field.getText().isEmpty()) {
 
                     try {
@@ -129,8 +122,6 @@ public class LoginPage extends JPanel {
 
                         if (isKeeper) {
                             ZootopiApp.user = new Keeper(id);
-
-
                             ZootopiApp.loggedIn = true;
                             MainPage_Keeper mainPage_keeper = new MainPage_Keeper(id);
                             ZootopiApp.main_window_keeper = mainPage_keeper;
@@ -140,8 +131,6 @@ public class LoginPage extends JPanel {
                             setEnabled(false);
                         } else if (isTrainer) {
                             ZootopiApp.user = new Trainer(id);
-
-
                             ZootopiApp.loggedIn = true;
                             MainPage_Trainer mainPage_trainer = new MainPage_Trainer(id);
                             ZootopiApp.main_window_trainer = mainPage_trainer;
@@ -149,6 +138,9 @@ public class LoginPage extends JPanel {
                             employeeID_field.setText("");
                             setVisible(false);
                             setEnabled(false);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Invalid id, please try again", "Invalid ID", JOptionPane.ERROR_MESSAGE);
+
                         }
 
                     } catch (NumberFormatException err) {

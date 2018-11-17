@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,7 +23,15 @@ public class MainPage_Manager extends JPanel {
     JComboBox tabs = new JComboBox(tab_string);
     JButton logout_button = new JButton("Logout");
     JLabel tab_label = new JLabel("Select Tab:");
+
+    private GridBagConstraints c = new GridBagConstraints();
+    private GridBagConstraints c1 = new GridBagConstraints();
+    private GridBagConstraints c2 = new GridBagConstraints();
+    private GridBagConstraints c3 = new GridBagConstraints();
+    private GridBagConstraints c4 = new GridBagConstraints();
+
     //======================================EMPLOYEE COMPONENTS======================================
+
     JButton employee_add = new JButton("Add Employee");
     JLabel employee_fNameLabel = new JLabel("First Name:");
     JTextField employee_inputFname = new JTextField(10);
@@ -34,7 +44,7 @@ public class MainPage_Manager extends JPanel {
     JLabel employee_payLabel = new JLabel("Pay");
     JTextField employee_inputPay = new JTextField(10);
 
-    JLabel employee_ZAddressLabel = new JLabel("Pay");
+    JLabel employee_ZAddressLabel = new JLabel("Zoo Address");
     JComboBox employee_inputZAddress = new JComboBox(Zoos);
 
 
@@ -57,8 +67,6 @@ public class MainPage_Manager extends JPanel {
     JButton employee_search = new JButton("Search for Employee");
     JLabel employee_SfNameLabel = new JLabel("First Name:");
     JTextField employee_SinputFname = new JTextField(10);
-    JLabel employee_SlNameLabel = new JLabel("Last Name:");
-    JTextField employee_SinputLname = new JTextField(10);
     JButton employee_volunteer = new JButton("Search Volunteers");
     //======================================ANIMAL COMPONENTS======================================
     JButton animal_add = new JButton("Add Animal");
@@ -86,7 +94,7 @@ public class MainPage_Manager extends JPanel {
     JLabel animal_RIDLabel = new JLabel("ID:");
     JTextField animal_RinputID = new JTextField(10);
     JButton animal_updateInfo = new JButton("Update Animal Info");
-    JLabel animal_UIDLabel = new JLabel("Name:");
+    JLabel animal_UIDLabel = new JLabel("ID:");
     JTextField animal_UinputID = new JTextField(10);
     JLabel animal_UnameLabel = new JLabel("Name:");
     JTextField animal_UinputName = new JTextField(10);
@@ -137,157 +145,262 @@ public class MainPage_Manager extends JPanel {
 
 
     public MainPage_Manager() {
-               this.add(tab_label);
-        this.add(tabs);
+        setLayout(new GridBagLayout());
+        this.setBackground(Color.white);
+        // c.fill = GridBagConstraints.HORIZONTAL;
+
+        c.gridx = 0;
+        c.gridy = 0;
+        this.add(tab_label,c);
+
+        c.gridx = 1;
+        this.add(tabs,c);
         ListenForPulldown lfp = new ListenForPulldown();
         tabs.addActionListener(lfp);
 
         ListenForButton lfb = new ListenForButton();
-        this.add(logout_button);
+        c.gridx = 2;
+        this.add(logout_button,c);
         logout_button.addActionListener(lfb);
 
         //======================================EMPLOYEE ======================================
-        this.add(employee_add);
-        this.add(employee_fNameLabel);
-        this.add(employee_inputFname);
-        this.add(employee_lNameLabel);
-        this.add(employee_inputLname);
-        this.add(employee_wlkeeLabel);
-        this.add(employee_inputwlkee);
-        this.add(employee_IDLabel);
-        this.add(employee_inputID);
-        this.add(employee_payLabel);
-        this.add(employee_inputPay);
-        this.add(employee_ZAddressLabel);
-        this.add(employee_inputZAddress);
+        c.insets = new Insets(35,0,0,0);  //top padding
+//        JSeparator sep1 = new JSeparator(SwingConstants.HORIZONTAL);
+//        sep1.setSize(100,1);
+//        c.weightx = 5;
+//        add(sep1,c);
+
+        //y = 1
+        c.gridy = 1;
+        c.gridx = 0;
+        this.add(employee_fNameLabel,c);
+        c.gridx = 1;
+        this.add(employee_inputFname,c);
+        c.gridx = 2;
+        this.add(employee_lNameLabel,c);
+        c.gridx = 3;
+        this.add(employee_inputLname,c);
+        c.gridx = 4;
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        this.add(employee_add,c);
+        c.fill = GridBagConstraints.NONE;
+
+        // y = 2
+        c.insets = new Insets(0,0,0,0);  //top padding
+        c.gridy = 2;
+        c.gridx = 0;
+        this.add(employee_wlkeeLabel,c);
+        c.gridx = 1;
+        this.add(employee_inputwlkee,c);
+        c.gridx = 2;
+        this.add(employee_IDLabel,c);
+        c.gridx = 3;
+        this.add(employee_inputID,c);
+        c.gridx = 4;
+
+
+        // y = 3
+        c.gridy = 3;
+        c.gridx = 0;
+        this.add(employee_payLabel,c);
+        c.gridx = 1;
+        this.add(employee_inputPay,c);
+        c.gridx = 2;
+        this.add(employee_ZAddressLabel,c);
+        c.gridx = 3;
+        this.add(employee_inputZAddress,c);
         employee_add.addActionListener(lfb);
 
 
-        this.add(employee_remove);
-        this.add(employee_RfNameLabel);
-        this.add(employee_RinputFname);
-        this.add(employee_RlNameLabel);
-        this.add(employee_RinputLname);
-        this.add(employee_RIDLabel);
-        this.add(employee_RinputID);
+        // y = 4
+        c.insets = new Insets(20,0,0,0);  //top padding
+        c.gridy = 4;
+        c.gridx = 0;
+        this.add(employee_RfNameLabel,c);
+        c.gridx = 1;
+        this.add(employee_RinputFname,c);
+        c.gridx = 2;
+        this.add(employee_RlNameLabel,c);
+        c.gridx = 3;
+        this.add(employee_RinputLname,c);
+        c.gridx = 4;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        this.add(employee_remove,c);
+        c.fill = GridBagConstraints.NONE;
         employee_remove.addActionListener(lfb);
 
-        this.add(employee_updateInfo);
-        this.add(employee_UfNameLabel);
-        this.add(employee_UinputFname);
-        this.add(employee_UlNameLabel);
-        this.add(employee_UinputLname);
-        this.add(employee_UIDLabel);
-        this.add(employee_UinputID);
-        this.add(employee_UpayLabel);
-        this.add(employee_UinputPay);
+        // y = 5
+        c.gridy = 5;
+        c.insets = new Insets(0,0,0,0);  //top padding
+        c.gridx = 0;
+        this.add(employee_RIDLabel,c);
+        c.gridx = 1;
+        this.add(employee_RinputID,c);
+
+        // y= 6
+        c.insets = new Insets(20,0,0,0);  //top padding
+        c.gridy = 6;
+        c.gridx = 0;
+        this.add(employee_UfNameLabel,c);
+        c.gridx = 1;
+        this.add(employee_UinputFname,c);
+        c.gridx = 2;
+        this.add(employee_UlNameLabel,c);
+        c.gridx = 3;
+        this.add(employee_UinputLname,c);
+        c.gridx = 4;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        this.add(employee_updateInfo,c);
+        c.fill = GridBagConstraints.NONE;
+
+
+        // y = 7
+        c.insets = new Insets(0,0,0,0);  //top padding
+        c.gridy = 7;
+        c.gridx = 0;
+        this.add(employee_UIDLabel,c);
+        c.gridx = 1;
+        this.add(employee_UinputID,c);
+        c.gridx = 2;
+        this.add(employee_UpayLabel,c);
+        c.gridx = 3;
+        this.add(employee_UinputPay,c);
         employee_updateInfo.addActionListener(lfb);
 
-        this.add(employee_search);
-        this.add(employee_SfNameLabel);
-        this.add(employee_SinputFname);
-        this.add(employee_SlNameLabel);
-        this.add(employee_SinputLname);
+        // y=8
+        c.insets = new Insets(20,0,0,0);  //top padding
+        c.gridx = 4;
+        c.gridy = 8;
+        this.add(employee_search,c);
+        c.gridx = 0;
+        this.add(employee_SfNameLabel,c);
+        c.gridx = 1;
+        this.add(employee_SinputFname,c);
         employee_search.addActionListener(lfb);
 
-        this.add(employee_volunteer);
+        // y = 9
+        c.insets = new Insets(20,0,0,0);  //top padding
+        c.gridy = 9;
+        c.gridx = 4;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        this.add(employee_volunteer,c);
+        c.fill = GridBagConstraints.NONE;
         employee_volunteer.addActionListener(lfb);
 
 
         //======================================ANIMAL ======================================
-        this.add(animal_IDLabel);
-        this.add(animal_inputID);
-        this.add(animal_add);
-        this.add(animal_nameLabel);
-        this.add(animal_inputName);
-        this.add(animal_ageLabel);
-        this.add(animal_sexLabel);
-        this.add(animal_inputSex);
-        this.add(animal_heitLabel);
-        this.add(animal_inputHeit);
-        this.add(animal_weitLabel);
-        this.add(animal_inputWeit);
-        this.add(animal_speciesLabel);
-        this.add(animal_inputSpecies);
-        this.add(animal_eatFreqLabel);
-        this.add(animal_inputEatFreq);
-        this.add(animal_eatAmtLabel);
-        this.add(animal_inputEatAmt);
-        this.add(animal_HabIDLabel);
-        this.add(animal_inputHabID);
+        c1.insets = new Insets(30,0,0,0);  //top padding
+
+
+        // Add new animal
+        this.addComponent(0,1,1,1, GridBagConstraints.NONE,c1,animal_IDLabel);
+        this.addComponent(1,1,1,1, GridBagConstraints.NONE,c1,animal_inputID);
+        c1.insets = new Insets(0,0,0,0);
+        this.addComponent(0,2,1,1, GridBagConstraints.NONE,c1,animal_nameLabel);
+        this.addComponent(1,2,1,1, GridBagConstraints.NONE,c1,animal_inputName);
+        this.addComponent(0,3,1,1, GridBagConstraints.NONE,c1,animal_ageLabel);
+        this.addComponent(1,3,1,1, GridBagConstraints.NONE,c1,animal_inputAge);
+        this.addComponent(0,4,1,1, GridBagConstraints.NONE,c1,animal_sexLabel);
+        this.addComponent(1,4,1,1, GridBagConstraints.NONE,c1,animal_inputSex);
+        this.addComponent(0,5,1,1, GridBagConstraints.NONE,c1,animal_heitLabel);
+        this.addComponent(1,5,1,1, GridBagConstraints.NONE,c1,animal_inputHeit);
+        this.addComponent(0,6,1,1, GridBagConstraints.NONE,c1,animal_weitLabel);
+        this.addComponent(1,6,1,1, GridBagConstraints.NONE,c1,animal_inputWeit);
+        this.addComponent(0,7,1,1, GridBagConstraints.NONE,c1,animal_speciesLabel);
+        this.addComponent(1,7,1,1, GridBagConstraints.NONE,c1,animal_inputSpecies);
+        this.addComponent(0,8,1,1, GridBagConstraints.NONE,c1,animal_eatFreqLabel);
+        this.addComponent(1,8,1,1, GridBagConstraints.NONE,c1,animal_inputEatFreq);
+        this.addComponent(0,9,1,1, GridBagConstraints.NONE,c1,animal_eatAmtLabel);
+        this.addComponent(1,9,1,1, GridBagConstraints.NONE,c1,animal_inputEatAmt);
+        this.addComponent(0,10,1,1, GridBagConstraints.NONE,c1,animal_HabIDLabel);
+        this.addComponent(1,10,1,1, GridBagConstraints.NONE,c1,animal_inputHabID);
+        this.addComponent(1,11,1,1, GridBagConstraints.NONE,c1,animal_add);
         animal_add.addActionListener(lfb);
 
-        this.add(animal_remove);
 
-        this.add(animal_RIDLabel);
-        this.add(animal_RinputID);
+        // remove animal
+        c1.insets = new Insets(30,0,0,0);  //top padding
+        this.addComponent(2,1,1,1, GridBagConstraints.NONE,c1,animal_RIDLabel);
+        this.addComponent(3,1,1,1, GridBagConstraints.NONE,c1,animal_RinputID);
+        c1.insets = new Insets(0,0,0,0);  //top padding
+        this.addComponent(3,2,1,1, GridBagConstraints.NONE,c1,animal_remove);
         animal_remove.addActionListener(lfb);
 
-        this.add(animal_updateInfo);
-        this.add(animal_UIDLabel);
-        this.add(animal_UinputID);
-        this.add(animal_UnameLabel);
-        this.add(animal_UinputName);
-        this.add(animal_UageLabel);
-        this.add(animal_UinputAge);
-        this.add(animal_UsexLabel);
-        this.add(animal_UinputSex);
-        this.add(animal_UheitLabel);
-        this.add(animal_UinputHeit);
-        this.add(animal_UweitLabel);
-        this.add(animal_UinputWeit);
-        this.add(animal_UspeciesLabel);
-        this.add(animal_UinputSpecies);
-        this.add(animal_UeatFreqLabel);
-        this.add(animal_UinputEatFreq);
-        this.add(animal_UeatAmtLabel);
-        this.add(animal_UinputEatAmt);
-        this.add(animal_UHabIDLabel);
-        this.add(animal_UinputHabID);
+        // update animal
+        c1.insets = new Insets(30,0,0,0);  //top padding
+        this.addComponent(4,1,1,1, GridBagConstraints.NONE,c1,animal_UIDLabel);
+        this.addComponent(5,1,1,1, GridBagConstraints.NONE,c1,animal_UinputID);
+        c1.insets = new Insets(0,0,0,0);  //top padding
+        this.addComponent(4,2,1,1, GridBagConstraints.NONE,c1,animal_UnameLabel);
+        this.addComponent(5,2,1,1, GridBagConstraints.NONE,c1,animal_UinputName);
+        this.addComponent(4,3,1,1, GridBagConstraints.NONE,c1,animal_UageLabel);
+        this.addComponent(5,3,1,1, GridBagConstraints.NONE,c1,animal_UinputAge);
+        this.addComponent(4,4,1,1, GridBagConstraints.NONE,c1,animal_UsexLabel);
+        this.addComponent(5,4,1,1, GridBagConstraints.NONE,c1,animal_UinputSex);
+        this.addComponent(4,5,1,1, GridBagConstraints.NONE,c1,animal_UheitLabel);
+        this.addComponent(5,5,1,1, GridBagConstraints.NONE,c1,animal_UinputHeit);
+        this.addComponent(4,6,1,1, GridBagConstraints.NONE,c1,animal_UweitLabel);
+        this.addComponent(5,6,1,1, GridBagConstraints.NONE,c1,animal_UinputWeit);
+        this.addComponent(4,7,1,1, GridBagConstraints.NONE,c1,animal_UspeciesLabel);
+        this.addComponent(5,7,1,1, GridBagConstraints.NONE,c1,animal_UinputSpecies);
+        this.addComponent(4,8,1,1, GridBagConstraints.NONE,c1,animal_UeatFreqLabel);
+        this.addComponent(5,8,1,1, GridBagConstraints.NONE,c1,animal_UinputEatFreq);
+        this.addComponent(4,9,1,1, GridBagConstraints.NONE,c1,animal_UeatAmtLabel);
+        this.addComponent(5,9,1,1, GridBagConstraints.NONE,c1,animal_UinputEatAmt);
+        this.addComponent(4,10,1,1, GridBagConstraints.NONE,c1,animal_UHabIDLabel);
+        this.addComponent(5,10,1,1, GridBagConstraints.NONE,c1,animal_UinputHabID);
+        this.addComponent(5,11,1,1, GridBagConstraints.NONE,c1,animal_updateInfo);
         animal_updateInfo.addActionListener(lfb);
 
-        this.add(animal_searchSpecies);
 
-        this.add(animal_SspeciesDetail);
-        this.add(animal_SspeciesLabel);
-        this.add(employee_SinputSpeci);
+        // search species
+        this.addComponent(2,5,1,1, GridBagConstraints.NONE,c1,animal_SspeciesLabel);
+        this.addComponent(3,5,1,1, GridBagConstraints.NONE,c1,employee_SinputSpeci);
+        this.addComponent(3,6,1,1, GridBagConstraints.NONE,c1,animal_searchSpecies);
         animal_searchSpecies.addActionListener(lfb);
 
-        this.add(animal_SspeciesDetail);
+        this.addComponent(3,11,1,1, GridBagConstraints.NONE,c1,animal_SspeciesDetail);
         animal_SspeciesDetail.addActionListener(lfb);
 
 //======================================FOOD======================================
-        this.add(food_sites);
+        c2.insets = new Insets(30,0,0,0);  //top padding
+
+        this.addComponent(1,2,1,1, GridBagConstraints.NONE,c2,food_sites);
+        this.addComponent(2,2,1,1, GridBagConstraints.NONE,c2,food_expires);
+
         food_sites.addActionListener(lfb);
-        this.add(food_expires);
         food_expires.addActionListener(lfb);
-        this.add(zoo_search);
-        this.add(zoo_inputLabel);
-        this.add(zoo_input);
+//======================================ZOO======================================
+
+        c4.insets = new Insets(30,0,0,0);  //top padding
+        this.addComponent(0,3,1,1, GridBagConstraints.NONE,c4,zoo_inputLabel);
+        this.addComponent(1,3,1,1, GridBagConstraints.NONE,c4,zoo_input);
+        this.addComponent(2,3,1,1, GridBagConstraints.NONE,c4,zoo_search);
         zoo_search.addActionListener(lfb);
-
-
 //======================================LOCATION======================================
-        this.add(location_searchByHab);
-        this.add(location_ByHabLabel);
-        this.add(location_InputByHab);
-        location_searchByHab.addActionListener(lfb);
+        c3.insets = new Insets(30,0,0,0);  //top padding
 
-        this.add(location_searchForHab);
-        this.add(location_InputSQFt);
-        this.add(location_SQFtLabel);
-        this.add(location_InputDepth);
-        this.add(location_depthLabel);
-        this.add(location_InputBiome);
-        this.add(location_biomeLabel);
+        this.addComponent(0,2,1,1, GridBagConstraints.NONE,c3,location_ByHabLabel);
+        this.addComponent(1,2,1,1, GridBagConstraints.NONE,c3,location_InputByHab);
+        this.addComponent(6,2,1,1, GridBagConstraints.HORIZONTAL,c3,location_searchByHab);
+        location_searchByHab.addActionListener(lfb);
+        c3.insets = new Insets(0,0,0,0);  //top padding
+        this.addComponent(0,3,1,1, GridBagConstraints.NONE,c3,location_SQFtLabel);
+        this.addComponent(1,3,1,1, GridBagConstraints.NONE,c3,location_InputSQFt);
+        this.addComponent(2,3,1,1, GridBagConstraints.NONE,c3,location_depthLabel);
+        this.addComponent(3,3,1,1, GridBagConstraints.NONE,c3,location_InputDepth);
+        this.addComponent(4,3,1,1, GridBagConstraints.NONE,c3,location_biomeLabel);
+        this.addComponent(5,3,1,1, GridBagConstraints.NONE,c3,location_InputBiome);
+        this.addComponent(6,3,1,1, GridBagConstraints.HORIZONTAL,c3,location_searchForHab);
         location_searchForHab.addActionListener(lfb);
 
-        this.add(location_searchByTemp);
-        this.add(location_searchByTemp);
-        this.add(location_inputTemp);
+        this.addComponent(0,4,1,1, GridBagConstraints.NONE,c3,location_tempLabel);
+        this.addComponent(1,4,1,1, GridBagConstraints.NONE,c3,location_inputTemp);
+        this.addComponent(6,4,1,1, GridBagConstraints.HORIZONTAL,c3,location_searchByTemp);
         location_searchByTemp.addActionListener(lfb);
 
-        this.add(location_seachForUse);
+        this.addComponent(6,5,1,1, GridBagConstraints.HORIZONTAL,c3,location_seachForUse);
         location_seachForUse.addActionListener(lfb);
 
 //======================================SHOW======================================
@@ -450,8 +563,7 @@ public class MainPage_Manager extends JPanel {
                 //TODO: call to results() page
             } else if (e.getSource() == employee_search) {
                 //test_label.setText("search employees");
-                user_manager.searchEmployee(employee_SinputFname.getText(),
-                        employee_SinputLname.getText());
+                user_manager.searchEmployee(employee_SinputFname.getText());
                 //TODO: call to results() page
             } else if (e.getSource() == employee_volunteer) {
                 //test_label.setText("get voluntolds");
@@ -499,8 +611,6 @@ public class MainPage_Manager extends JPanel {
             employee_search.setVisible(bool);
             employee_SfNameLabel.setVisible(bool);
             employee_SinputFname.setVisible(bool);
-            employee_SlNameLabel.setVisible(bool);
-            employee_SinputLname.setVisible(bool);
 
             employee_volunteer.setVisible(bool);
         } else if (name == ANIMAL) {
@@ -510,6 +620,7 @@ public class MainPage_Manager extends JPanel {
             animal_nameLabel.setVisible(bool);
             animal_inputName.setVisible(bool);
             animal_ageLabel.setVisible(bool);
+            animal_inputAge.setVisible(bool);
             animal_sexLabel.setVisible(bool);
             animal_inputSex.setVisible(bool);
             animal_heitLabel.setVisible(bool);
@@ -586,5 +697,15 @@ public class MainPage_Manager extends JPanel {
         } else if (name == SHOW) {
             show_seachBytime.setVisible(bool);
         }
+    }
+
+    public void addComponent( int x, int y, int w, int h, int fill, GridBagConstraints gbc, Component aComponent )
+    {
+        gbc.gridx = x;
+        gbc.gridy = y;
+        // gbc.gridwidth = w;
+        // gbc.gridheight = h;
+        gbc.fill = fill;
+        add(aComponent,gbc);
     }
 }

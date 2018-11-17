@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /*
 Main page keeper view
@@ -10,6 +11,8 @@ Main page keeper view
 
 public class MainPage_Keeper extends JPanel {
     public String f_name;
+    public ArrayList<Integer> animalIDs;
+    public ArrayList<String> animalNames;
 
     private Keeper user_Keeper;
 
@@ -19,11 +22,19 @@ public class MainPage_Keeper extends JPanel {
 
     public MainPage_Keeper(int id){
         user_Keeper  = new Keeper(id);
-        ResultSet employeeInfo = user_Keeper.searchEmployeeID(id);
-
+        ResultSet employeeInfo_rse = user_Keeper.searchEmployeeID(id);
         try {
-            if(employeeInfo.next()){
-                f_name = employeeInfo.getString("f_name");
+            if(employeeInfo_rse.next()){
+                f_name = employeeInfo_rse.getString("f_name");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        ResultSet keeperAnimal_rse = user_Keeper.getKeeperAnimal(id);
+        try {
+            while(keeperAnimal_rse.next()) {
+                animalIDs.add(keeperAnimal_rse.getInt("animal_id"));
             }
         } catch (SQLException e){
             e.printStackTrace();

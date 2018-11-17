@@ -144,12 +144,10 @@ public class ZooManager {
 
     // search employee based on first name
     // return all info regarding that employee: f_name, l_name, employee_id, pay and zoo_address
-    public ResultSet searchEmployee(String f_name, String l_name) {
+    public ResultSet searchEmployee(String f_name) {
         StringBuilder strb = new StringBuilder();
         strb.append("select * from employee where f_name = '");
         strb.append(f_name);
-        strb.append("' and l_name = '");
-        strb.append(l_name);
         strb.append("'");
         String query = strb.toString();
         return jdbc.executeQuery(query);

@@ -2,7 +2,7 @@ import java.sql.ResultSet;
 
 public class Keeper extends Employee{
 
-    private Driver         jdbc = Driver.getInstance();
+    private Driver         driver = Driver.getInstance();
     ;
     private int employee_id;
 
@@ -26,7 +26,7 @@ public class Keeper extends Employee{
                 "and f.site_id = sf.site_id and k.employee_id = ");
         str.append(employee_id);
         str.append(" order by sa.location;");
-        return jdbc.executeQuery(str.toString());
+        return driver.executeQuery(str.toString());
     }
 
 
@@ -40,11 +40,19 @@ public class Keeper extends Employee{
         str.append(height);
         str.append(" where animal_id = ");
         str.append(animal_id); str.append(";");
-        String result = jdbc.executeAlter(str.toString());
+        String result = driver.executeAlter(str.toString());
         if (result == "1")
             return  "Success";
         else
             return  "Not Valid";
+    }
+
+    public ResultSet getKeeperAnimal(int id) {
+        StringBuilder strb = new StringBuilder();
+        strb.append("select * from caresfor where employee_id = ");
+        strb.append(id);
+        String query = strb.toString();
+        return driver.executeQuery(query);
     }
 
 }
