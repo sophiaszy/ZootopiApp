@@ -1,6 +1,9 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+
 
 public class MainPage_Manager extends JPanel {
 
@@ -11,8 +14,8 @@ public class MainPage_Manager extends JPanel {
     private static final String LOCATION = "Location";
     private static final String SHOW = "Show";
 
-    private static final String AD_ZOO1 ="2000 Meadowvale Rd";
-    private static final String AD_ZOO2 ="80 Mandai Lake Rd";
+    private static final String AD_ZOO1 = "2000 Meadowvale Rd";
+    private static final String AD_ZOO2 = "80 Mandai Lake Rd";
 
     String[] tab_string = {EMPLPOYEE, ANIMAL, FOOD, ZOO, LOCATION, SHOW};
     String[] Zoos = {AD_ZOO1, AD_ZOO2};
@@ -137,7 +140,7 @@ public class MainPage_Manager extends JPanel {
 
 
     public MainPage_Manager() {
-               this.add(tab_label);
+        this.add(tab_label);
         this.add(tabs);
         ListenForPulldown lfp = new ListenForPulldown();
         tabs.addActionListener(lfp);
@@ -146,7 +149,9 @@ public class MainPage_Manager extends JPanel {
         this.add(logout_button);
         logout_button.addActionListener(lfb);
 
+
         //======================================EMPLOYEE ======================================
+
         this.add(employee_add);
         this.add(employee_fNameLabel);
         this.add(employee_inputFname);
@@ -261,12 +266,12 @@ public class MainPage_Manager extends JPanel {
         food_sites.addActionListener(lfb);
         this.add(food_expires);
         food_expires.addActionListener(lfb);
+
+//======================================ZOO======================================
         this.add(zoo_search);
         this.add(zoo_inputLabel);
         this.add(zoo_input);
         zoo_search.addActionListener(lfb);
-
-
 //======================================LOCATION======================================
         this.add(location_searchByHab);
         this.add(location_ByHabLabel);
@@ -322,143 +327,164 @@ public class MainPage_Manager extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == logout_button) {
-
-                ZootopiApp.main_window_manager.setVisible(false);
-                ZootopiApp.main_window_manager.setEnabled(false);//TODO: not sure about this, this might need to be dropped....
-
+            if (e.getSource() == logout_button) {//==========================================LOGOUT=====================
                 ZootopiApp.login.setVisible(true);
                 ZootopiApp.login.setEnabled(true);
-
-
-
-
-
-                ;
-            } else if (e.getSource() == show_seachBytime) {
-                //test_label.setText("show search");
-
-
-
-                ResultPage result = new ResultPage(user_manager.showAt());
-                //here set page visibility etc
-                // ??? When do we "dump" a page vs just hiding it?
-
-
-
-                //TODO: call to results() page
-            } else if (e.getSource() == zoo_search) {
-                //test_label.setText(zoo_input.getText());
-                user_manager.filterZooByCountry(zoo_input.getText());
-                //TODO: call to results() page
-            } else if (e.getSource() == food_expires) {
-                //test_label.setText("food expires");
-                user_manager.getFoodSoonToExpires();
-                //TODO: call to results() page
+                ZootopiApp.main_window_manager.setVisible(false);
+                ZootopiApp.main_window_manager.setEnabled(false);
+            } else if (e.getSource() == show_seachBytime) {//================================SHOW=======================
+                resultCallHandle(user_manager.showAt());
+            } else if (e.getSource() == zoo_search) {//======================================ZOO========================
+                if (zoo_input.getText().isBlank()){
+                    JOptionPane.showMessageDialog(null,
+                            "Incorrect Input. Please try again", "Search Zoo", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                resultCallHandle(user_manager.filterZooByCountry(zoo_input.getText()));
+            } else if (e.getSource() == food_expires) {//====================================FOOD=======================
+                resultCallHandle(user_manager.getFoodSoonToExpires());
             } else if (e.getSource() == food_sites) {
-                //test_label.setText("food sites");
-                user_manager.getFoodDetails();
-                //TODO: call to results() page
-            } else if (e.getSource() == location_searchByHab) {
-                //test_label.setText("search by habitat");
-                user_manager.animalsInHabitat(Integer.parseInt(location_InputByHab.getText()));
-                //TODO: call to results() page
+                resultCallHandle(user_manager.getFoodDetails());
+            } else if (e.getSource() == location_searchByHab) {//============================LOCATION===================
+                if (location_InputByHab.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Incorrect Input. Please try again", "Search Habitat", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                resultCallHandle(user_manager.animalsInHabitat(Integer.parseInt(location_InputByHab.getText())));
             } else if (e.getSource() == location_searchByTemp) {
-                //test_label.setText("temp search");
-                user_manager.searchByTemperature(Integer.parseInt(location_inputTemp.getText()));
-                //TODO: call to results() page
+                if (location_inputTemp.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Incorrect Input. Please try again", "Search Temperature", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                resultCallHandle(user_manager.searchByTemperature(Integer.parseInt(location_inputTemp.getText())));
             } else if (e.getSource() == location_searchForHab) {
-                //test_label.setText("forche for hab");
-                user_manager.findHabitat(Integer.parseInt(location_InputSQFt.getText()),
+                if (location_InputSQFt.getText().isBlank() || location_InputDepth.getText().isBlank() ||
+                location_InputBiome.getText().isBlank()){
+                    JOptionPane.showMessageDialog(null,
+                            "Incorrect Input. Please try again", "Search Habitat", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                resultCallHandle(user_manager.findHabitat(
+                        Integer.parseInt(location_InputSQFt.getText()),
                         Integer.parseInt(location_InputDepth.getText()),
-                        location_InputBiome.getText());
-                //TODO: call to results() page
+                        location_InputBiome.getText()));
             } else if (e.getSource() == location_seachForUse) {
-                //test_label.setText("search for use");
-                user_manager.sitesNotUsed();
-                //TODO: call to results() page
-            } else if (e.getSource() == animal_add) {
-                //test_label.setText("add animal");
-                user_manager.addAnimal(
-                        Integer.parseInt(animal_inputID.getText()),
-                        animal_inputName.getText(),
-                        Integer.parseInt(animal_inputAge.getText()),
-                        animal_inputSex.getText(),
-                        Integer.parseInt(animal_inputHeit.getText()),
-                        Integer.parseInt(animal_inputWeit.getText()),
-                        animal_inputSpecies.getText(),
-                        Integer.parseInt(animal_inputEatFreq.getText()),
-                        Integer.parseInt(animal_inputEatAmt.getText()),
-                        Integer.parseInt(animal_inputHabID.getText()));
-                //TODO: call to results() page
+                resultCallHandle(user_manager.sitesNotUsed());
+            } else if (e.getSource() == animal_add) {//======================================ANIMAL=====================
+                try {
+                    String s = user_manager.addAnimal(
+                            Integer.parseInt(animal_inputID.getText()),
+                            animal_inputName.getText(),
+                            Integer.parseInt(animal_inputAge.getText()),
+                            animal_inputSex.getText(),
+                            Integer.parseInt(animal_inputHeit.getText()),
+                            Integer.parseInt(animal_inputWeit.getText()),
+                            animal_inputSpecies.getText(),
+                            Integer.parseInt(animal_inputEatFreq.getText()),
+                            Integer.parseInt(animal_inputEatAmt.getText()),
+                            Integer.parseInt(animal_inputHabID.getText()));
+                    JOptionPane.showMessageDialog(null, s, "Add Animal",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }catch (Exception en){
+                    JOptionPane.showMessageDialog(null,
+                            "Incorrect Input. Please try again", "Add Animal", JOptionPane.ERROR_MESSAGE);
+                }
             } else if (e.getSource() == animal_remove) {
-                //test_label.setText("animalus deletus");
-                user_manager.deleteAnimal(Integer.parseInt(animal_RinputID.getText()));
-                //TODO: call to results() page
+                try {
+                    String s = user_manager.deleteAnimal(
+                            Integer.parseInt(animal_RinputID.getText()));
+                    JOptionPane.showMessageDialog(null,
+                            s, "Remove Animal", JOptionPane.INFORMATION_MESSAGE);
+                }catch(Exception er){
+                    JOptionPane.showMessageDialog(null,
+                            "Incorrect Input.  Please try again", "Remove Animal", JOptionPane.ERROR_MESSAGE);
+                }
             } else if (e.getSource() == animal_updateInfo) {
-                //test_label.setText("update animal info");
-                user_manager.updateAnimal(
-                        Integer.parseInt(animal_UinputID.getText()),
-                        animal_UinputName.getText(),
-                        Integer.parseInt(animal_UinputAge.getText()),
-                        animal_UinputSex.getText(),
-                        Integer.parseInt(animal_UinputHeit.getText()),
-                        Integer.parseInt(animal_UinputWeit.getText()),
-                        animal_UinputSpecies.getText(),
-                        Integer.parseInt(animal_UinputEatFreq.getText()),
-                        Integer.parseInt(animal_UinputEatAmt.getText()),
-                        Integer.parseInt(animal_UinputHabID.getText()));
-                //TODO: call to results() page
+                try {
+                    String s = user_manager.updateAnimal(
+                            Integer.parseInt(animal_UinputID.getText()),
+                            animal_UinputName.getText(),
+                            Integer.parseInt(animal_UinputAge.getText()),
+                            animal_UinputSex.getText(),
+                            Integer.parseInt(animal_UinputHeit.getText()),
+                            Integer.parseInt(animal_UinputWeit.getText()),
+                            animal_UinputSpecies.getText(),
+                            Integer.parseInt(animal_UinputEatFreq.getText()),
+                            Integer.parseInt(animal_UinputEatAmt.getText()),
+                            Integer.parseInt(animal_UinputHabID.getText()));
+                    JOptionPane.showMessageDialog(null,
+                            s, "Update Animal", JOptionPane.INFORMATION_MESSAGE);
+                } catch(Exception eua){
+                    JOptionPane.showMessageDialog(null,
+                            "Incorrect Input. Please try again", "Update Animal", JOptionPane.ERROR_MESSAGE);
+                }
             } else if (e.getSource() == animal_searchSpecies) {
-               // test_label.setText("search by species");
-                user_manager.groupAnimalBySpecies();
-                //TODO: call to results() page
+                resultCallHandle(user_manager.groupAnimalBySpecies());
             } else if (e.getSource() == animal_SspeciesDetail) {
-                //test_label.setText("species details");
-                user_manager.getSpeciesDetail(animal_SspeciesDetail.getText());
-                //TODO: call to results() page
-            } else if (e.getSource() == employee_add) {
-                //test_label.setText("add employee");
-                /*user_manager.addEmployee(employee_inputFname.getText(),
-                        employee_inputLname.getText(),
-                        Integer.parseInt(employee_inputwlkee.getText()),
-                        Integer.parseInt(employee_inputID.getText()),
-                        Integer.parseInt(employee_inputPay.getText()));
-                */
-                user_manager.addEmployee(employee_inputFname.getText(),
-                        employee_inputLname.getText(),
-                        Integer.parseInt(employee_inputwlkee.getText()),
-                        Integer.parseInt(employee_inputID.getText()),
-                        Integer.parseInt(employee_inputPay.getText()),
-                        employee_inputZAddress.getSelectedItem().toString()
-                        );
-
-                //TODO: call to results() page
+                resultCallHandle(user_manager.getSpeciesDetail(animal_SspeciesDetail.getText()));
+            } else if (e.getSource() == employee_add) {//======================================EMPLOYEE=================
+                try {
+                    String s = user_manager.addEmployee(
+                            employee_inputFname.getText(),
+                            employee_inputLname.getText(),
+                            Integer.parseInt(employee_inputwlkee.getText()),
+                            Integer.parseInt(employee_inputID.getText()),
+                            Integer.parseInt(employee_inputPay.getText()),
+                            employee_inputZAddress.getSelectedItem().toString());
+                    JOptionPane.showMessageDialog(null,
+                            s, "Add Employee", JOptionPane.INFORMATION_MESSAGE);
+            }catch (Exception eae){
+                    JOptionPane.showMessageDialog(null,
+                            "Incorrect Input.  Please try again", "Add Employee", JOptionPane.ERROR_MESSAGE);
+            }
             } else if (e.getSource() == employee_remove) {
-                //test_label.setText("remove employee");
-                user_manager.removeEmployee(
-                        Integer.parseInt(employee_RinputID.getText()),
-                        employee_RinputFname.getText(),
-                        employee_RinputLname.getText());
-                //TODO: call to results() page
+                try {
+                    String s = user_manager.removeEmployee(
+                            Integer.parseInt(employee_RinputID.getText()),
+                            employee_RinputFname.getText(),
+                            employee_RinputLname.getText());
+                    JOptionPane.showMessageDialog(null,
+                            s, "Remove Employee", JOptionPane.INFORMATION_MESSAGE);
+                }catch (Exception ere){
+                    JOptionPane.showMessageDialog(null,
+                            "Incorrect Input. Please try again", "Remove Employee", JOptionPane.ERROR_MESSAGE);
+                }
             } else if (e.getSource() == employee_updateInfo) {
-                //test_label.setText("employee info update");
-                user_manager.updateEmployeeInfo(employee_UinputFname.getText(),
-                        employee_UinputLname.getText(),
-                        Integer.parseInt(employee_UinputID.getText()),
-                        Integer.parseInt(employee_UinputPay.getText()));
-                //TODO: call to results() page
+                try {
+                    String s = user_manager.updateEmployee(
+                            employee_UinputFname.getText(),
+                            employee_UinputLname.getText(),
+                            Integer.parseInt(employee_UinputID.getText()),
+                            Integer.parseInt(employee_UinputPay.getText()));
+                    JOptionPane.showMessageDialog(null,
+                            s, "Update Employee", JOptionPane.INFORMATION_MESSAGE);
+                } catch(Exception eue){
+                    JOptionPane.showMessageDialog(null,
+                            "Incorrect Input. Please try again", "Update Employee", JOptionPane.ERROR_MESSAGE);
+                }
             } else if (e.getSource() == employee_search) {
-                //test_label.setText("search employees");
-                user_manager.searchEmployee(employee_SinputFname.getText(),
-                        employee_SinputLname.getText());
-                //TODO: call to results() page
+                if (employee_SinputFname.getText().isBlank() || employee_SinputLname.getText().isBlank()){
+                    JOptionPane.showMessageDialog(null,
+                            "Incorrect Input. Please try again", "Search Employee", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                resultCallHandle(user_manager.searchEmployee(
+                        employee_SinputFname.getText(),
+                        employee_SinputLname.getText()));
             } else if (e.getSource() == employee_volunteer) {
-                //test_label.setText("get voluntolds");
-                user_manager.getVolunteer();
-                //TODO: call to results() page
+                resultCallHandle(user_manager.getVolunteer());
             }
         }
+    }
+    //Helper to create and call results window
+    private void resultCallHandle(ResultSet rs){
+        ZootopiApp.results = new ResultPage(rs);
+        ZootopiApp.results.setVisible(true);
+        ZootopiApp.window.add(ZootopiApp.results);
+        ZootopiApp.main_window_manager.setVisible(false);
+        ZootopiApp.main_window_manager.setEnabled(false);
     }
 
     //Helper to set multiple components visibility

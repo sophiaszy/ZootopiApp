@@ -195,7 +195,3 @@ public class LoginPage extends JPanel {
 
 }
 
-
-    //TODO: mouse input button
-    //TODO: mouse tooltip "enter"
-
