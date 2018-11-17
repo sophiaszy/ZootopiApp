@@ -343,8 +343,10 @@ public class MainPage_Manager extends JPanel {
                 resultCallHandle(user_manager.filterZooByCountry(zoo_input.getText()));
             } else if (e.getSource() == food_expires) {//====================================FOOD=======================
                 resultCallHandle(user_manager.getFoodSoonToExpires());
+
             } else if (e.getSource() == food_sites) {
                 resultCallHandle(user_manager.getFoodDetails());
+
             } else if (e.getSource() == location_searchByHab) {//============================LOCATION===================
                 if (location_InputByHab.getText().isBlank()) {
                     JOptionPane.showMessageDialog(null,

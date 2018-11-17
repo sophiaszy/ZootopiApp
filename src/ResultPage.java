@@ -1,11 +1,12 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import net.proteanit.sql.DbUtils;
+import java.util.Vector;
 
 
 import static javax.swing.ScrollPaneConstants.*;
@@ -14,51 +15,50 @@ public class ResultPage extends JPanel {
 
 
     private JLabel page_title = new JLabel("Results");
-    private JButton back        = new JButton("Back");
+    private JButton back = new JButton("Back");
     private JTable res_table = new JTable();
-    //JScrollPane scrollPane = new JScrollPane(res_table,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 
-
-    public ResultPage(ResultSet res){
-        //scrollPane.setPreferredSize(new Dimension(1000,200));
-        //this.add(scrollPane);
+    public ResultPage(ResultSet res) {
         this.add(page_title);
         page_title.setVisible(true);
         this.add(back);
         back.setVisible(true);
         ListenForButton lfb = new ListenForButton();
         back.addActionListener(lfb);
-        this.setEnabled(true);
-        this.setVisible(true);
-       // JScrollBar bar = scrollPane.getVerticalScrollBar();
-        //bar.setPreferredSize(new Dimension(40, 0));
-        this.add(res_table);
 
-        //scrollPane.setBackground(Color.ORANGE);
-        res_table.setBackground(Color.green);
+        try {
+            if (res.next() == false) {
+                JOptionPane.showMessageDialog(null, "No Results.");
+            } else {
+                ResultSetMetaData rsMetaData = res.getMetaData();
+                DefaultTableModel dtm = new DefaultTableModel();
+                int cols = rsMetaData.getColumnCount();
+                Vector colName = new Vector();
+                Vector dataRows = new Vector();
 
+                for (int i = 1; i < cols; i++) {
+                    colName.addElement(rsMetaData.getColumnName(i));
+                }
+                dtm.setColumnIdentifiers(colName);
 
-        //TODO: add table scroll pane
-        //TODO: don't allow people to edit the scroll pane
-        //Missing column headers(meta data)
-        //res.getMetaData()
-        try
-        {
+                do {
+                    dataRows = new Vector();
+                    for (int j = 1; j < cols; j++) {
+                        dataRows.addElement(res.getString(j));
+                    }
+                    dtm.addRow(dataRows);
+                }
+                while (res.next());
+                res_table.setModel(dtm);
 
-            res_table.setModel(DbUtils.resultSetToTableModel(res));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error");
+            e.printStackTrace();
         }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }
-
-        //scrollPane.setVisible(true);
-        res_table.setVisible(true);
-
-
+        add(new JScrollPane(res_table));
     }
-
     private class ListenForButton implements ActionListener {
 
         @Override
@@ -71,6 +71,4 @@ public class ResultPage extends JPanel {
             }
         }
     }
-
-
 }
