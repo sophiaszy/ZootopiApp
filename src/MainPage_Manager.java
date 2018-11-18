@@ -577,14 +577,12 @@ public class MainPage_Manager extends JPanel {
                             "Incorrect Input. Please try again", "Update Employee", JOptionPane.ERROR_MESSAGE);
                 }
             } else if (e.getSource() == employee_search) {
-                if (employee_SinputFname.getText().isBlank() || employee_SinputLname.getText().isBlank()){
+                if (employee_SinputFname.getText().isBlank()){
                     JOptionPane.showMessageDialog(null,
                             "Incorrect Input. Please try again", "Search Employee", JOptionPane.ERROR_MESSAGE);
+                } else{
+                    resultCallHandle(user_manager.searchEmployee(employee_SinputFname.getText()));
                 }
-                else
-                resultCallHandle(user_manager.searchEmployee(
-                        employee_SinputFname.getText(),
-                        employee_SinputLname.getText()));
             } else if (e.getSource() == employee_volunteer) {
                 resultCallHandle(user_manager.getVolunteer());
             }
