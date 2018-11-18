@@ -1,6 +1,7 @@
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by OwenTsai on 2018-11-09.
@@ -107,6 +108,7 @@ public class Driver {
         int i;
         for (i = 0; i < dropStatements.size(); i++){
             executeAlter(dropStatements.get(i));
+
         }
     }
 

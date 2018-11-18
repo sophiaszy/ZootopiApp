@@ -14,7 +14,7 @@ public class ZooManager {
     // return:
     //      "Employee successfully added" if inputs are valid"
     //      "Not Valid" otherwise
-    public String addEmployee(String f_name, String l_name, int walkeetalkee, int employee_id, int pay, String zooAddress) {
+    public String addEmployee(String f_name, String l_name, int walkeetalkee, int employee_id, int pay, String zooAddress){
         StringBuilder strb1 = new StringBuilder();
         strb1.append("insert into employeecommunication values ('");
         strb1.append(f_name);
@@ -57,49 +57,47 @@ public class ZooManager {
     public String removeEmployee(int employee_id, String f_name, String l_name) {
         // need to see if Employee is trainer or keeper
         StringBuilder sb = new StringBuilder();
+        sb.append("select * from employee where employee_id = ");
+        sb.append(employee_id);
+        boolean isEmployee = false;
+        try {
+             isEmployee = jdbc.executeQuery(sb.toString()).next();
+        }catch(SQLException e) {System.out.println("select employee query failed");}
+        if (!isEmployee) return "Not Valid";
+
+        sb = new StringBuilder();
         boolean isTrainer = false;
         boolean isKeeper = false;
         sb.append("select * from trainer where employee_id = ");
         sb.append(employee_id);
         try {
             isTrainer = jdbc.executeQuery(sb.toString()).next();
-        } catch (SQLException e) {
-            System.out.println("select trainer query failed");
-        }
+        }catch(SQLException e) {System.out.println("select trainer query failed");}
         sb = new StringBuilder();
         sb.append("select * from keeper where employee_id = ");
         sb.append(employee_id);
         try {
             isKeeper = jdbc.executeQuery(sb.toString()).next();
-        } catch (SQLException e) {
-            System.out.println("select keeper query failed");
-        }
-        if (!isTrainer && !isKeeper)
-            return "Not Valid";
+        }catch(SQLException e) {System.out.println("select keeper query failed");}
 
         // Delete from Trainer/Keeper + Employee
         if (isKeeper) {
             sb = new StringBuilder();
-            sb.append("delete from caresfor where employee_id = ");
-            sb.append(employee_id);
+            sb.append("delete from caresfor where employee_id = "); sb.append(employee_id);
             jdbc.executeAlter(sb.toString());
             sb = new StringBuilder();
-            sb.append("delete from keeper where employee_id = ");
-            sb.append(employee_id);
+            sb.append("delete from keeper where employee_id = "); sb.append(employee_id);
             jdbc.executeAlter(sb.toString());
         }
         if (isTrainer) {
             sb = new StringBuilder();
-            sb.append("delete from trains where employee_id = ");
-            sb.append(employee_id);
+            sb.append("delete from trains where employee_id = "); sb.append(employee_id);
             jdbc.executeAlter(sb.toString());
             sb = new StringBuilder();
-            sb.append("delete from performs where employee_id = ");
-            sb.append(employee_id);
+            sb.append("delete from performs where employee_id = "); sb.append(employee_id);
             jdbc.executeAlter(sb.toString());
             sb = new StringBuilder();
-            sb.append("delete from trainer where employee_id = ");
-            sb.append(employee_id);
+            sb.append("delete from trainer where employee_id = "); sb.append(employee_id);
             jdbc.executeAlter(sb.toString());
         }
         StringBuilder strb1 = new StringBuilder();
@@ -173,9 +171,7 @@ public class ZooManager {
             } else {
                 System.out.println("error: update pay failed when name is the same");
             }
-            //THIS WORKS
         }
-
         // save old first name and last name
         StringBuilder strb1 = new StringBuilder();
         strb1.append("select f_name, l_name from employee where employee_id = ");
@@ -194,8 +190,6 @@ public class ZooManager {
         } catch (SQLException e) {
             System.out.println("select employee query failed");
         }
-
-
         //save walktalkee number based on first and last name
         StringBuilder strb3 = new StringBuilder();
         strb3.append("select walkeetalkeeno from employeecommunication where f_name = '");
@@ -205,16 +199,16 @@ public class ZooManager {
         strb3.append("'");
         int walkeetalkeeNum = 0;
         ResultSet rs2 = jdbc.executeQuery(strb3.toString());
-            try {
-                if (rs2.next() == true) {
-                    walkeetalkeeNum = rs2.getInt(1);
-                } else {
-                    System.out.println("Invalid query: selecting walkeetalkeeno");
-                }
-            } catch (SQLException e) {
-                System.out.println("select employeecommunication query failed");
+        try {
+            if (rs2.next() == true) {
+                walkeetalkeeNum = rs2.getInt(1);
+            } else {
+                System.out.println("Invalid query: selecting walkeetalkeeno");
             }
-            // insert employee communication
+        } catch (SQLException e) {
+            System.out.println("select employeecommunication query failed");
+        }
+        // insert employee communication
         sb = new StringBuilder();
         sb.append("insert into employeecommunication values ('");
         sb.append(f_name);
@@ -251,7 +245,6 @@ public class ZooManager {
             System.out.println(result);
 
         }
-
         // update pay
         StringBuilder sb1 = new StringBuilder();
         sb1.append("update employee set pay = ");
@@ -267,7 +260,8 @@ public class ZooManager {
         return "Failed";
     }
 
-    // search employee based on first name
+
+        // search employee based on first name
     // return all info regarding that employee: f_name, l_name, employee_id, pay and zoo_address
     public ResultSet searchEmployee(String f_name) {
         StringBuilder strb = new StringBuilder();
@@ -341,7 +335,7 @@ public class ZooManager {
     // add animal
     // return "Success", "Unique Constraint violation" (that id already exist) or  "Not Valid" (for another reason)
     public String addAnimal(int id, String name, int age, String sex, int height, int weight, String species,
-                          int eat_freq, int eat_amt, int habitat_id) {
+                            int eat_freq, int eat_amt, int habitat_id) {
         StringBuilder str = new StringBuilder();
         str.append("insert into animal values (");
         str.append(id); str.append(", '");
@@ -370,44 +364,28 @@ public class ZooManager {
     // need to delete all relationships that animals are involved in before deleting animal
     // performs, caresfor, trains, eats, trades
     public String deleteAnimal(int id) {
-        // check if id is in the table
-        StringBuilder sb = new StringBuilder();
-        sb.append("select * from animal where animal_id = ");
-        sb.append(id);
-        ResultSet rs = jdbc.executeQuery(sb.toString());
-        try {
-            if (rs.next() == false)
-                return "Not Valid";
-        } catch (SQLException e) {
-            System.out.println("error: select query not valid");
-        }
 
-        sb = new StringBuilder(); sb.append("delete from performs where animal_id = ");
-        sb.append(id);
+        StringBuilder sb;
+        sb = new StringBuilder(); sb.append("delete from performs where animal_id = "); sb.append(id);
         System.out.print(jdbc.executeQuery(sb.toString()));
-        sb = new StringBuilder(); sb.append("delete from caresfor where animal_id = ");
-        sb.append(id);
+        sb = new StringBuilder(); sb.append("delete from caresfor where animal_id = "); sb.append(id);
         System.out.print(jdbc.executeQuery(sb.toString()));
-        sb = new StringBuilder(); sb.append("delete from trains where animal_id = ");
-        sb.append(id);
+        sb = new StringBuilder(); sb.append("delete from trains where animal_id = "); sb.append(id);
         System.out.print(jdbc.executeQuery(sb.toString()));
-        sb = new StringBuilder(); sb.append("delete from eats where animal_id = ");
-        sb.append(id);
+        sb = new StringBuilder(); sb.append("delete from eats where animal_id = "); sb.append(id);
         System.out.print(jdbc.executeQuery(sb.toString()));
-        sb = new StringBuilder(); sb.append("delete from trades where animal_id = ");
-        sb.append(id);
+        sb = new StringBuilder(); sb.append("delete from trades where animal_id = "); sb.append(id);
         System.out.print(jdbc.executeQuery(sb.toString()));
 
         StringBuilder str = new StringBuilder();
-        str.append("delete from animal where animal_id = ");
+        str.append("delete from animal where animal_id =");
         str.append(id);
-        String result = jdbc.executeAlter(str.toString());
-        if (result == "1") {
+        String query = str.toString();
+        String result = jdbc.executeAlter(query);
+        if (result == "1")
             return "Success";
-        } else {
-            System.out.println("error: delete animal failed");
-        }
-        return "Not Valid";
+        else
+            return "Not Valid";
     }
 
     // update animal
@@ -416,14 +394,14 @@ public class ZooManager {
                                int eat_freq, int eat_amt, int habitat_id) {
         StringBuilder str = new StringBuilder();
         str.append("update animal set name = '");
-        str.append(name); str.append("', age = ");
-        str.append(age); str.append(", sex = '");
-        str.append(sex); str.append("', height = ");
-        str.append(height); str.append(", weight = ");
-        str.append(weight); str.append(", species = '");
-        str.append(species); str.append("', eat_freq_week = ");
-        str.append(eat_freq); str.append(", eat_amount = ");
-        str.append(eat_amt); str.append(", enclosure_id = ");
+        str.append(name); str.append("', age =");
+        str.append(age); str.append(", sex ='");
+        str.append(sex); str.append("', height =");
+        str.append(height); str.append(", weight =");
+        str.append(weight); str.append(", species ='");
+        str.append(species); str.append("', eat_freq_week =");
+        str.append(eat_freq); str.append(", eat_amount =");
+        str.append(eat_amt); str.append(", enclosure_id =");
         str.append(habitat_id); str.append("where animal_id = ");
         str.append(id);
         String query = str.toString();
@@ -432,7 +410,7 @@ public class ZooManager {
             return "Success";
         else
             System.out.println(result);
-            return "Not Valid";
+        return "Not Valid";
     }
 
 

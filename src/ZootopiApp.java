@@ -3,6 +3,8 @@
 import javax.swing.*;
 import java.awt.*;
 
+import static java.awt.BorderLayout.SOUTH;
+
 /*
 Main function file.  Launches the app
  */
@@ -23,11 +25,17 @@ public class ZootopiApp {
 
     public ZootopiApp(){
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(new Dimension(800,500));
-        window.setBackground(Color.BLUE);
+        window.setSize(new Dimension(1000,700));
+        window.setBackground(Color.WHITE);
         window.setLocationRelativeTo(null);
         window.setResizable(true);
         window.add(login);
+
+        java.net.URL imgUrl = getClass().getResource("image/Zapp_logo.png");
+        ImageIcon icon = new ImageIcon(imgUrl);
+        JLabel back = new JLabel(icon);
+        window.add(back,SOUTH);
+        window.setBackground(Color.WHITE);
         window.setVisible(true);
     }
 
