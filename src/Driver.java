@@ -195,7 +195,7 @@ public class Driver {
         populateTable.add("insert into employeecommunication values ('mary','poppins',4)");
         populateTable.add("insert into employeecommunication values ('Ivan','pavlov',5)");
         populateTable.add("insert into employeecommunication values ('cesar','milan',6)");
-        populateTable.add("insert into employeecommunication values ('jacob','kowalski',7)");
+        populateTable.add("insert into employeecommunication values ('jane','kowalski',7)");
         populateTable.add("insert into employeecommunication values ('kermit','thefrog',8)");
         populateTable.add("insert into employeecommunication values ('tom','hanks',9)");
         populateTable.add("insert into employeecommunication values ('argus','filch',10)");
@@ -208,7 +208,7 @@ public class Driver {
         populateTable.add("insert into employee values ('mary','poppins', 1235823623, 100, '2000 Meadowvale Rd')");
         populateTable.add("insert into employee values ('Ivan','pavlov', 1376542234, 100, '2000 Meadowvale Rd')");
         populateTable.add("insert into employee values ('cesar','milan', 1234234236, 100, '2000 Meadowvale Rd')");
-        populateTable.add("insert into employee values ('jacob','kowalski', 1264245243, 75, '2000 Meadowvale Rd')");
+        populateTable.add("insert into employee values ('jane','kowalski', 1264245243, 75, '2000 Meadowvale Rd')");
         populateTable.add("insert into employee values ('kermit','thefrog', 1279765434, 75, '80 Mandai Lake Rd')");
         populateTable.add("insert into employee values ('tom','hanks', 1246545423, 75, '80 Mandai Lake Rd')");
         populateTable.add("insert into employee values ('argus','filch', 1367865421, 0, '80 Mandai Lake Rd')");
@@ -227,7 +227,7 @@ public class Driver {
         populateTable.add("insert into trainer values ('balancing', 1234234236)");
         populateTable.add("insert into trainer values ('general', 1264245243)");
         populateTable.add("insert into trainer values ('hoop jumping', 1341567688)");
-        populateTable.add("insert into trainer values ('balancing', 1345976543);\n");
+        populateTable.add("insert into trainer values ('balancing', 1345976543);");
         populateTable.add("insert into food values (11, 'frozen chicken', 80, '2018-11-08', '2020-08-10', 101)");
         populateTable.add("insert into food values (12, 'bamboo', 69, '2018-10-21', '2018-12-10', 101)");
         populateTable.add("insert into food values (13, 'fish', 32, '2018-11-08', '2021-03-31', 101)");
