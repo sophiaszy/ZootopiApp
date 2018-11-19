@@ -33,14 +33,14 @@ public class ResultPage extends JPanel {
                 Vector colName = new Vector();
                 Vector dataRows = new Vector();
 
-                for (int i = 1; i < cols; i++) {
+                for (int i = 1; i < cols+1; i++) {
                     colName.addElement(rsMetaData.getColumnName(i));
                 }
                 dtm.setColumnIdentifiers(colName);
 
                 do {
                     dataRows = new Vector();
-                    for (int j = 1; j < cols; j++) {
+                    for (int j = 1; j < cols+1; j++) {
                         dataRows.addElement(res.getString(j));
                     }
                     dtm.addRow(dataRows);

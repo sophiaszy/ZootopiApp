@@ -70,15 +70,6 @@ public class LoginPage extends JPanel {
         driver = Driver.getInstance();
 
         ResultSet r  = driver.executeQuery("select * from trainer");
-        try {
-            if (r.next()) {
-                System.out.println("trainer added");
-
-            }
-        }catch (SQLException err) {
-            System.out.println("trainer err !!!!!");
-
-        }
     }
 
 

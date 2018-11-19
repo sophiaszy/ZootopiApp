@@ -526,8 +526,7 @@ public class MainPage_Manager extends JPanel {
                             Integer.parseInt(animal_UinputEatFreq.getText()),
                             Integer.parseInt(animal_UinputEatAmt.getText()),
                             Integer.parseInt(animal_UinputHabID.getText()));
-                    JOptionPane.showMessageDialog(null,
-                            s, "Update Animal", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, s, "Update Animal", JOptionPane.INFORMATION_MESSAGE);
                 } catch(Exception eua){
                     JOptionPane.showMessageDialog(null,
                             "Incorrect Input. Please try again", "Update Animal", JOptionPane.ERROR_MESSAGE);
@@ -723,12 +722,9 @@ public class MainPage_Manager extends JPanel {
         }
     }
 
-    public void addComponent( int x, int y, int w, int h, int fill, GridBagConstraints gbc, Component aComponent )
-    {
+    public void addComponent( int x, int y, int w, int h, int fill, GridBagConstraints gbc, Component aComponent ) {
         gbc.gridx = x;
         gbc.gridy = y;
-        // gbc.gridwidth = w;
-        // gbc.gridheight = h;
         gbc.fill = fill;
         add(aComponent,gbc);
     }
