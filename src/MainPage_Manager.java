@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -120,7 +119,7 @@ public class MainPage_Manager extends JPanel {
     JButton animal_searchSpecies = new JButton("Search by Species");
     JButton animal_SspeciesDetail = new JButton("Species Details");
     JLabel animal_SspeciesLabel = new JLabel("Species:");
-    JTextField employee_SinputSpeci = new JTextField(10);
+    JTextField animal_SinputSpeci = new JTextField(10);
     //======================================FOOD COMPONENTS======================================
     JButton food_sites = new JButton("Get Food");
     JButton food_expires = new JButton("Expiring Food");
@@ -129,7 +128,7 @@ public class MainPage_Manager extends JPanel {
     JTextField zoo_input = new JTextField(10);
     JLabel zoo_inputLabel = new JLabel("Country:");
     //======================================LOCATION COMPONENTS======================================
-    JButton location_searchByHab = new JButton("Find Habitat");
+    JButton location_searchByHab = new JButton("Find Animals In Habitat");
     JTextField location_InputByHab = new JTextField(10);
     JLabel location_ByHabLabel = new JLabel("Enclosure ID:");
     JButton location_searchForHab = new JButton("Suitable Habitat");
@@ -364,7 +363,7 @@ public class MainPage_Manager extends JPanel {
 
         // search species
         this.addComponent(2,5,1,1, GridBagConstraints.NONE,c1,animal_SspeciesLabel);
-        this.addComponent(3,5,1,1, GridBagConstraints.NONE,c1,employee_SinputSpeci);
+        this.addComponent(3,5,1,1, GridBagConstraints.NONE,c1, animal_SinputSpeci);
         this.addComponent(3,6,1,1, GridBagConstraints.NONE,c1,animal_searchSpecies);
         animal_searchSpecies.addActionListener(lfb);
 
@@ -538,9 +537,12 @@ public class MainPage_Manager extends JPanel {
                             "Incorrect Input. Please try again", "Update Animal", JOptionPane.ERROR_MESSAGE);
                 }
             } else if (e.getSource() == animal_searchSpecies) {
-                resultCallHandle(user_manager.groupAnimalBySpecies());
+                resultCallHandle(user_manager.getSpeciesDetail(animal_SinputSpeci.getText()));
+
             } else if (e.getSource() == animal_SspeciesDetail) {
-                resultCallHandle(user_manager.getSpeciesDetail(animal_SspeciesDetail.getText()));
+
+                resultCallHandle(user_manager.groupAnimalBySpecies());
+
             } else if (e.getSource() == employee_add) {//======================================EMPLOYEE=================
                 try {
                     String s = user_manager.addEmployee(
@@ -698,7 +700,7 @@ public class MainPage_Manager extends JPanel {
 
             animal_SspeciesDetail.setVisible(bool);
             animal_SspeciesLabel.setVisible(bool);
-            employee_SinputSpeci.setVisible(bool);
+            animal_SinputSpeci.setVisible(bool);
 
             animal_SspeciesDetail.setVisible(bool);
         } else if (name == FOOD) {
