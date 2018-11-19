@@ -10,7 +10,6 @@ drop table trainer;
 drop table employee;
 drop table employeecommunication;
 drop table animal;
-drop table animalfood;
 drop table habitat;
 drop table habitatbiome;
 drop table site;
