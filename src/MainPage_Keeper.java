@@ -60,6 +60,7 @@ public class MainPage_Keeper extends JPanel {
         setBackground(Color.white);
         setLayout(new GridBagLayout());
         hello_label.setText("Hello, keeper "+ f_name);
+        c.insets = new Insets(0,0,0,0);  //top padding
 
         this.addComponent(0,0,1,1,GridBagConstraints.NONE,c,new JLabel());
         JLabel j = new JLabel("                           ");
@@ -74,7 +75,7 @@ public class MainPage_Keeper extends JPanel {
         c.insets = new Insets(30,0,0,0);  //top padding
         this.addComponent(1,1,1,1, GridBagConstraints.NONE,c,animal_UIDLabel);
         this.addComponent(2,1,1,1, GridBagConstraints.NONE,c,animal_UinputID);
-        //c.insets = new Insets(0,0,0,0);  //top padding
+        c.insets = new Insets(0,0,0,0);  //top padding
         this.addComponent(1,2,1,1, GridBagConstraints.NONE,c,animal_UheitLabel);
         this.addComponent(2,2,1,1, GridBagConstraints.NONE,c,animal_UinputHeit);
         this.addComponent(1,3,1,1, GridBagConstraints.NONE,c,animal_UweitLabel);
@@ -99,6 +100,7 @@ public class MainPage_Keeper extends JPanel {
             model.removeRow(i);
             System.out.println("removing row " +i);
         }
+        res_table.setModel(model);
 
         try {
             if (rse.next() == false) {
@@ -162,6 +164,8 @@ public class MainPage_Keeper extends JPanel {
         System.out.println("column count =  "+res_table.getModel().getColumnCount());
 
     }
+
+
     private class ListenForButton implements ActionListener {
 
         @Override
@@ -184,7 +188,8 @@ public class MainPage_Keeper extends JPanel {
                 JOptionPane.showMessageDialog(null,
                         "Incorrect Input. Please try again", "Update Animal", JOptionPane.ERROR_MESSAGE);
                 }
-                setTable(user_Keeper.getKeeperView());
+                ResultSet r = user_Keeper.getKeeperView();
+                setTable(r);
 
             }
         }
