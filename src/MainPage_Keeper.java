@@ -181,8 +181,8 @@ public class MainPage_Keeper extends JPanel {
             } else if (e.getSource() == updateAnimal_btn){
                 try { user_Keeper.updateAnimal(
                             Integer.parseInt(animal_UinputID.getText()),
-                            Integer.parseInt(animal_UinputHeit.getText()),
-                            Integer.parseInt(animal_UinputWeit.getText())
+                            Integer.parseInt(animal_UinputWeit.getText()),
+                            Integer.parseInt(animal_UinputHeit.getText())
                     );
                 } catch(Exception err){
                 JOptionPane.showMessageDialog(null,
