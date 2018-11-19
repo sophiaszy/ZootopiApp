@@ -21,7 +21,7 @@ public class MainPage_Manager extends JPanel {
     String[] tab_string = {EMPLPOYEE, ANIMAL, FOOD, ZOO, LOCATION, SHOW};
     String[] Zoos = {AD_ZOO1, AD_ZOO2};
 
-    ZooManager user_manager = new ZooManager();
+    ZooManager user_manager = ZootopiApp.manager;
     JComboBox tabs = new JComboBox(tab_string);
     JButton logout_button = new JButton("Logout");
     JLabel tab_label = new JLabel("Select Tab:");
@@ -49,7 +49,6 @@ public class MainPage_Manager extends JPanel {
     JLabel employee_ZAddressLabel = new JLabel("Zoo Address");
     JComboBox employee_inputZAddress = new JComboBox(Zoos);
 
-
     JButton employee_remove = new JButton("Remove Employee");
     JLabel employee_RfNameLabel = new JLabel("First Name:");
     JTextField employee_RinputFname = new JTextField(10);
@@ -69,6 +68,8 @@ public class MainPage_Manager extends JPanel {
     JButton employee_search = new JButton("Search for Employee");
     JLabel employee_SfNameLabel = new JLabel("First Name:");
     JTextField employee_SinputFname = new JTextField(10);
+    JLabel employee_SLNameLabel = new JLabel("Last Name:");
+    JTextField employee_SinputLname = new JTextField(10);
     JButton employee_volunteer = new JButton("Search Volunteers");
     //======================================ANIMAL COMPONENTS======================================
     JButton animal_add = new JButton("Add Animal");
@@ -279,6 +280,11 @@ public class MainPage_Manager extends JPanel {
         this.add(employee_SfNameLabel,c);
         c.gridx = 1;
         this.add(employee_SinputFname,c);
+        c.gridx = 2;
+        this.add(employee_SLNameLabel,c);
+        c.gridx = 3;
+        this.add(employee_SinputLname,c);
+
         employee_search.addActionListener(lfb);
 
         // y = 9
@@ -576,11 +582,12 @@ public class MainPage_Manager extends JPanel {
                             "Incorrect Input. Please try again", "Update Employee", JOptionPane.ERROR_MESSAGE);
                 }
             } else if (e.getSource() == employee_search) {
-                if (employee_SinputFname.getText().isBlank()){
+                if (employee_SinputFname.getText().isBlank() ||  employee_SinputLname.getText().isBlank()){
                     JOptionPane.showMessageDialog(null,
                             "Incorrect Input. Please try again", "Search Employee", JOptionPane.ERROR_MESSAGE);
                 } else{
-                    resultCallHandle(user_manager.searchEmployee(employee_SinputFname.getText()));
+                    resultCallHandle(user_manager.searchEmployee(employee_SinputFname.getText(),
+                            employee_SinputLname.getText()));
                 }
             } else if (e.getSource() == employee_volunteer) {
                 resultCallHandle(user_manager.getVolunteer());
@@ -634,6 +641,8 @@ public class MainPage_Manager extends JPanel {
             employee_search.setVisible(bool);
             employee_SfNameLabel.setVisible(bool);
             employee_SinputFname.setVisible(bool);
+            employee_SLNameLabel.setVisible(bool);
+            employee_SinputLname.setVisible(bool);
 
             employee_volunteer.setVisible(bool);
         } else if (name == ANIMAL) {
